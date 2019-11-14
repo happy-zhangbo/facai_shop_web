@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.facai.facai.dao.CartMapper">
+  <resultMap id="BaseResultMap" type="com.facai.facai.entity.Cart">
+    <constructor>
+      <idArg column="c_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="c_psid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="c_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="c_userid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="c_total" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    c_id, c_psid, c_count, c_userid, c_total
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cart
+    where c_id = #{cId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cart
+    where c_id = #{cId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.facai.facai.entity.Cart">
+    insert into cart (c_id, c_psid, c_count, 
+      c_userid, c_total)
+    values (#{cId,jdbcType=INTEGER}, #{cPsid,jdbcType=INTEGER}, #{cCount,jdbcType=INTEGER}, 
+      #{cUserid,jdbcType=INTEGER}, #{cTotal,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.facai.facai.entity.Cart">
+    insert into cart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        c_id,
+      </if>
+      <if test="cPsid != null">
+        c_psid,
+      </if>
+      <if test="cCount != null">
+        c_count,
+      </if>
+      <if test="cUserid != null">
+        c_userid,
+      </if>
+      <if test="cTotal != null">
+        c_total,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="cPsid != null">
+        #{cPsid,jdbcType=INTEGER},
+      </if>
+      <if test="cCount != null">
+        #{cCount,jdbcType=INTEGER},
+      </if>
+      <if test="cUserid != null">
+        #{cUserid,jdbcType=INTEGER},
+      </if>
+      <if test="cTotal != null">
+        #{cTotal,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.facai.facai.entity.Cart">
+    update cart
+    <set>
+      <if test="cPsid != null">
+        c_psid = #{cPsid,jdbcType=INTEGER},
+      </if>
+      <if test="cCount != null">
+        c_count = #{cCount,jdbcType=INTEGER},
+      </if>
+      <if test="cUserid != null">
+        c_userid = #{cUserid,jdbcType=INTEGER},
+      </if>
+      <if test="cTotal != null">
+        c_total = #{cTotal,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.facai.facai.entity.Cart">
+    update cart
+    set c_psid = #{cPsid,jdbcType=INTEGER},
+      c_count = #{cCount,jdbcType=INTEGER},
+      c_userid = #{cUserid,jdbcType=INTEGER},
+      c_total = #{cTotal,jdbcType=DECIMAL}
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

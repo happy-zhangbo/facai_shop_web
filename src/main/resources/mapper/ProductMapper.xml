@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.facai.facai.dao.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.facai.facai.entity.Product">
+    <constructor>
+      <idArg column="p_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="p_title" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="p_state" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="p_typeid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="p_createtime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="p_detail" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="p_brief" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="p_brand" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="p_source" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="p_origin" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="p_cover" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="p_imgArray" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    p_id, p_title, p_state, p_typeid, p_createtime, p_detail, p_brief, p_brand, p_source, 
+    p_origin, p_cover, p_imgArray
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where p_id = #{pId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from product
+    where p_id = #{pId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.facai.facai.entity.Product">
+    insert into product (p_id, p_title, p_state, 
+      p_typeid, p_createtime, p_detail, 
+      p_brief, p_brand, p_source, 
+      p_origin, p_cover, p_imgArray
+      )
+    values (#{pId,jdbcType=INTEGER}, #{pTitle,jdbcType=VARCHAR}, #{pState,jdbcType=INTEGER}, 
+      #{pTypeid,jdbcType=INTEGER}, #{pCreatetime,jdbcType=TIMESTAMP}, #{pDetail,jdbcType=VARCHAR}, 
+      #{pBrief,jdbcType=VARCHAR}, #{pBrand,jdbcType=VARCHAR}, #{pSource,jdbcType=VARCHAR}, 
+      #{pOrigin,jdbcType=VARCHAR}, #{pCover,jdbcType=VARCHAR}, #{pImgarray,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.facai.facai.entity.Product">
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pId != null">
+        p_id,
+      </if>
+      <if test="pTitle != null">
+        p_title,
+      </if>
+      <if test="pState != null">
+        p_state,
+      </if>
+      <if test="pTypeid != null">
+        p_typeid,
+      </if>
+      <if test="pCreatetime != null">
+        p_createtime,
+      </if>
+      <if test="pDetail != null">
+        p_detail,
+      </if>
+      <if test="pBrief != null">
+        p_brief,
+      </if>
+      <if test="pBrand != null">
+        p_brand,
+      </if>
+      <if test="pSource != null">
+        p_source,
+      </if>
+      <if test="pOrigin != null">
+        p_origin,
+      </if>
+      <if test="pCover != null">
+        p_cover,
+      </if>
+      <if test="pImgarray != null">
+        p_imgArray,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pId != null">
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="pTitle != null">
+        #{pTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pState != null">
+        #{pState,jdbcType=INTEGER},
+      </if>
+      <if test="pTypeid != null">
+        #{pTypeid,jdbcType=INTEGER},
+      </if>
+      <if test="pCreatetime != null">
+        #{pCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pDetail != null">
+        #{pDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="pBrief != null">
+        #{pBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="pBrand != null">
+        #{pBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="pSource != null">
+        #{pSource,jdbcType=VARCHAR},
+      </if>
+      <if test="pOrigin != null">
+        #{pOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="pCover != null">
+        #{pCover,jdbcType=VARCHAR},
+      </if>
+      <if test="pImgarray != null">
+        #{pImgarray,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.facai.facai.entity.Product">
+    update product
+    <set>
+      <if test="pTitle != null">
+        p_title = #{pTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pState != null">
+        p_state = #{pState,jdbcType=INTEGER},
+      </if>
+      <if test="pTypeid != null">
+        p_typeid = #{pTypeid,jdbcType=INTEGER},
+      </if>
+      <if test="pCreatetime != null">
+        p_createtime = #{pCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pDetail != null">
+        p_detail = #{pDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="pBrief != null">
+        p_brief = #{pBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="pBrand != null">
+        p_brand = #{pBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="pSource != null">
+        p_source = #{pSource,jdbcType=VARCHAR},
+      </if>
+      <if test="pOrigin != null">
+        p_origin = #{pOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="pCover != null">
+        p_cover = #{pCover,jdbcType=VARCHAR},
+      </if>
+      <if test="pImgarray != null">
+        p_imgArray = #{pImgarray,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where p_id = #{pId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.facai.facai.entity.Product">
+    update product
+    set p_title = #{pTitle,jdbcType=VARCHAR},
+      p_state = #{pState,jdbcType=INTEGER},
+      p_typeid = #{pTypeid,jdbcType=INTEGER},
+      p_createtime = #{pCreatetime,jdbcType=TIMESTAMP},
+      p_detail = #{pDetail,jdbcType=VARCHAR},
+      p_brief = #{pBrief,jdbcType=VARCHAR},
+      p_brand = #{pBrand,jdbcType=VARCHAR},
+      p_source = #{pSource,jdbcType=VARCHAR},
+      p_origin = #{pOrigin,jdbcType=VARCHAR},
+      p_cover = #{pCover,jdbcType=VARCHAR},
+      p_imgArray = #{pImgarray,jdbcType=VARCHAR}
+    where p_id = #{pId,jdbcType=INTEGER}
+  </update>
+</mapper>

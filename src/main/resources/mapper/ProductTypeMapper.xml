@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.facai.facai.dao.ProductTypeMapper">
+  <resultMap id="BaseResultMap" type="com.facai.facai.entity.ProductType">
+    <constructor>
+      <idArg column="pt_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="pt_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="pt_state" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="pt_createtime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    pt_id, pt_name, pt_state, pt_createtime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from productType
+    where pt_id = #{ptId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from productType
+    where pt_id = #{ptId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.facai.facai.entity.ProductType">
+    insert into productType (pt_id, pt_name, pt_state, 
+      pt_createtime)
+    values (#{ptId,jdbcType=INTEGER}, #{ptName,jdbcType=VARCHAR}, #{ptState,jdbcType=INTEGER}, 
+      #{ptCreatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.facai.facai.entity.ProductType">
+    insert into productType
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ptId != null">
+        pt_id,
+      </if>
+      <if test="ptName != null">
+        pt_name,
+      </if>
+      <if test="ptState != null">
+        pt_state,
+      </if>
+      <if test="ptCreatetime != null">
+        pt_createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ptId != null">
+        #{ptId,jdbcType=INTEGER},
+      </if>
+      <if test="ptName != null">
+        #{ptName,jdbcType=VARCHAR},
+      </if>
+      <if test="ptState != null">
+        #{ptState,jdbcType=INTEGER},
+      </if>
+      <if test="ptCreatetime != null">
+        #{ptCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.facai.facai.entity.ProductType">
+    update productType
+    <set>
+      <if test="ptName != null">
+        pt_name = #{ptName,jdbcType=VARCHAR},
+      </if>
+      <if test="ptState != null">
+        pt_state = #{ptState,jdbcType=INTEGER},
+      </if>
+      <if test="ptCreatetime != null">
+        pt_createtime = #{ptCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pt_id = #{ptId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.facai.facai.entity.ProductType">
+    update productType
+    set pt_name = #{ptName,jdbcType=VARCHAR},
+      pt_state = #{ptState,jdbcType=INTEGER},
+      pt_createtime = #{ptCreatetime,jdbcType=TIMESTAMP}
+    where pt_id = #{ptId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.facai.facai.dao.ProductSpecsMapper">
+  <resultMap id="BaseResultMap" type="com.facai.facai.entity.ProductSpecs">
+    <constructor>
+      <idArg column="s_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="s_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="s_state" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="s_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="s_brief" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="s_stock" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="s_productid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    s_id, s_name, s_state, s_price, s_brief, s_stock, s_productid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from productSpecs
+    where s_id = #{sId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from productSpecs
+    where s_id = #{sId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.facai.facai.entity.ProductSpecs">
+    insert into productSpecs (s_id, s_name, s_state, 
+      s_price, s_brief, s_stock, 
+      s_productid)
+    values (#{sId,jdbcType=INTEGER}, #{sName,jdbcType=VARCHAR}, #{sState,jdbcType=INTEGER}, 
+      #{sPrice,jdbcType=DECIMAL}, #{sBrief,jdbcType=VARCHAR}, #{sStock,jdbcType=INTEGER}, 
+      #{sProductid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.facai.facai.entity.ProductSpecs">
+    insert into productSpecs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sId != null">
+        s_id,
+      </if>
+      <if test="sName != null">
+        s_name,
+      </if>
+      <if test="sState != null">
+        s_state,
+      </if>
+      <if test="sPrice != null">
+        s_price,
+      </if>
+      <if test="sBrief != null">
+        s_brief,
+      </if>
+      <if test="sStock != null">
+        s_stock,
+      </if>
+      <if test="sProductid != null">
+        s_productid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sId != null">
+        #{sId,jdbcType=INTEGER},
+      </if>
+      <if test="sName != null">
+        #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="sState != null">
+        #{sState,jdbcType=INTEGER},
+      </if>
+      <if test="sPrice != null">
+        #{sPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="sBrief != null">
+        #{sBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="sStock != null">
+        #{sStock,jdbcType=INTEGER},
+      </if>
+      <if test="sProductid != null">
+        #{sProductid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.facai.facai.entity.ProductSpecs">
+    update productSpecs
+    <set>
+      <if test="sName != null">
+        s_name = #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="sState != null">
+        s_state = #{sState,jdbcType=INTEGER},
+      </if>
+      <if test="sPrice != null">
+        s_price = #{sPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="sBrief != null">
+        s_brief = #{sBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="sStock != null">
+        s_stock = #{sStock,jdbcType=INTEGER},
+      </if>
+      <if test="sProductid != null">
+        s_productid = #{sProductid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.facai.facai.entity.ProductSpecs">
+    update productSpecs
+    set s_name = #{sName,jdbcType=VARCHAR},
+      s_state = #{sState,jdbcType=INTEGER},
+      s_price = #{sPrice,jdbcType=DECIMAL},
+      s_brief = #{sBrief,jdbcType=VARCHAR},
+      s_stock = #{sStock,jdbcType=INTEGER},
+      s_productid = #{sProductid,jdbcType=INTEGER}
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

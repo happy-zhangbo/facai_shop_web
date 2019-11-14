@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.facai.facai.dao.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.facai.facai.entity.Order">
+    <constructor>
+      <idArg column="o_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="o_serialNum" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="o_payMethod" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="o_createtime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="o_state" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="o_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="o_transactionNum" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="o_totalAmount" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="o_userid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="o_remarks" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    o_id, o_serialNum, o_payMethod, o_createtime, o_state, o_type, o_transactionNum, 
+    o_totalAmount, o_userid, o_remarks
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order
+    where o_id = #{oId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order
+    where o_id = #{oId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.facai.facai.entity.Order">
+    insert into order (o_id, o_serialNum, o_payMethod, 
+      o_createtime, o_state, o_type, 
+      o_transactionNum, o_totalAmount, o_userid, 
+      o_remarks)
+    values (#{oId,jdbcType=INTEGER}, #{oSerialnum,jdbcType=VARCHAR}, #{oPaymethod,jdbcType=INTEGER}, 
+      #{oCreatetime,jdbcType=TIMESTAMP}, #{oState,jdbcType=INTEGER}, #{oType,jdbcType=INTEGER}, 
+      #{oTransactionnum,jdbcType=VARCHAR}, #{oTotalamount,jdbcType=DECIMAL}, #{oUserid,jdbcType=INTEGER}, 
+      #{oRemarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.facai.facai.entity.Order">
+    insert into order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oId != null">
+        o_id,
+      </if>
+      <if test="oSerialnum != null">
+        o_serialNum,
+      </if>
+      <if test="oPaymethod != null">
+        o_payMethod,
+      </if>
+      <if test="oCreatetime != null">
+        o_createtime,
+      </if>
+      <if test="oState != null">
+        o_state,
+      </if>
+      <if test="oType != null">
+        o_type,
+      </if>
+      <if test="oTransactionnum != null">
+        o_transactionNum,
+      </if>
+      <if test="oTotalamount != null">
+        o_totalAmount,
+      </if>
+      <if test="oUserid != null">
+        o_userid,
+      </if>
+      <if test="oRemarks != null">
+        o_remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oId != null">
+        #{oId,jdbcType=INTEGER},
+      </if>
+      <if test="oSerialnum != null">
+        #{oSerialnum,jdbcType=VARCHAR},
+      </if>
+      <if test="oPaymethod != null">
+        #{oPaymethod,jdbcType=INTEGER},
+      </if>
+      <if test="oCreatetime != null">
+        #{oCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oState != null">
+        #{oState,jdbcType=INTEGER},
+      </if>
+      <if test="oType != null">
+        #{oType,jdbcType=INTEGER},
+      </if>
+      <if test="oTransactionnum != null">
+        #{oTransactionnum,jdbcType=VARCHAR},
+      </if>
+      <if test="oTotalamount != null">
+        #{oTotalamount,jdbcType=DECIMAL},
+      </if>
+      <if test="oUserid != null">
+        #{oUserid,jdbcType=INTEGER},
+      </if>
+      <if test="oRemarks != null">
+        #{oRemarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.facai.facai.entity.Order">
+    update order
+    <set>
+      <if test="oSerialnum != null">
+        o_serialNum = #{oSerialnum,jdbcType=VARCHAR},
+      </if>
+      <if test="oPaymethod != null">
+        o_payMethod = #{oPaymethod,jdbcType=INTEGER},
+      </if>
+      <if test="oCreatetime != null">
+        o_createtime = #{oCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oState != null">
+        o_state = #{oState,jdbcType=INTEGER},
+      </if>
+      <if test="oType != null">
+        o_type = #{oType,jdbcType=INTEGER},
+      </if>
+      <if test="oTransactionnum != null">
+        o_transactionNum = #{oTransactionnum,jdbcType=VARCHAR},
+      </if>
+      <if test="oTotalamount != null">
+        o_totalAmount = #{oTotalamount,jdbcType=DECIMAL},
+      </if>
+      <if test="oUserid != null">
+        o_userid = #{oUserid,jdbcType=INTEGER},
+      </if>
+      <if test="oRemarks != null">
+        o_remarks = #{oRemarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where o_id = #{oId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.facai.facai.entity.Order">
+    update order
+    set o_serialNum = #{oSerialnum,jdbcType=VARCHAR},
+      o_payMethod = #{oPaymethod,jdbcType=INTEGER},
+      o_createtime = #{oCreatetime,jdbcType=TIMESTAMP},
+      o_state = #{oState,jdbcType=INTEGER},
+      o_type = #{oType,jdbcType=INTEGER},
+      o_transactionNum = #{oTransactionnum,jdbcType=VARCHAR},
+      o_totalAmount = #{oTotalamount,jdbcType=DECIMAL},
+      o_userid = #{oUserid,jdbcType=INTEGER},
+      o_remarks = #{oRemarks,jdbcType=VARCHAR}
+    where o_id = #{oId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

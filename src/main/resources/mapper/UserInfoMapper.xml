@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.facai.facai.dao.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.facai.facai.entity.UserInfo">
+    <constructor>
+      <idArg column="u_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="u_nickname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="u_password" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="u_state" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="u_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="u_openid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="u_regType" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="u_createtime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="u_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="u_email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="u_loginTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="u_avatar" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    u_id, u_nickname, u_password, u_state, u_type, u_openid, u_regType, u_createtime, 
+    u_phone, u_email, u_loginTime, u_avatar
+  </sql>
+  <!-- 根据openid获取用户信息 -->
+  <select id="selectByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from userinfo
+    where u_openid = #{openid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from userinfo
+    where u_id = #{uId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from userinfo
+    where u_id = #{uId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="uId" parameterType="com.facai.facai.entity.UserInfo">
+    insert into userinfo (u_id, u_nickname, u_password, 
+      u_state, u_type, u_openid, 
+      u_regType, u_createtime, u_phone, 
+      u_email, u_loginTime, u_avatar
+      )
+    values (#{uId,jdbcType=INTEGER}, #{uNickname,jdbcType=VARCHAR}, #{uPassword,jdbcType=VARCHAR}, 
+      #{uState,jdbcType=INTEGER}, #{uType,jdbcType=INTEGER}, #{uOpenid,jdbcType=VARCHAR}, 
+      #{uRegtype,jdbcType=INTEGER}, #{uCreatetime,jdbcType=TIMESTAMP}, #{uPhone,jdbcType=VARCHAR}, 
+      #{uEmail,jdbcType=VARCHAR}, #{uLogintime,jdbcType=TIMESTAMP}, #{uAvatar,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.facai.facai.entity.UserInfo">
+    insert into userinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uId != null">
+        u_id,
+      </if>
+      <if test="uNickname != null">
+        u_nickname,
+      </if>
+      <if test="uPassword != null">
+        u_password,
+      </if>
+      <if test="uState != null">
+        u_state,
+      </if>
+      <if test="uType != null">
+        u_type,
+      </if>
+      <if test="uOpenid != null">
+        u_openid,
+      </if>
+      <if test="uRegtype != null">
+        u_regType,
+      </if>
+      <if test="uCreatetime != null">
+        u_createtime,
+      </if>
+      <if test="uPhone != null">
+        u_phone,
+      </if>
+      <if test="uEmail != null">
+        u_email,
+      </if>
+      <if test="uLogintime != null">
+        u_loginTime,
+      </if>
+      <if test="uAvatar != null">
+        u_avatar,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uId != null">
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="uNickname != null">
+        #{uNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null">
+        #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uState != null">
+        #{uState,jdbcType=INTEGER},
+      </if>
+      <if test="uType != null">
+        #{uType,jdbcType=INTEGER},
+      </if>
+      <if test="uOpenid != null">
+        #{uOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="uRegtype != null">
+        #{uRegtype,jdbcType=INTEGER},
+      </if>
+      <if test="uCreatetime != null">
+        #{uCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uPhone != null">
+        #{uPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="uEmail != null">
+        #{uEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="uLogintime != null">
+        #{uLogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uAvatar != null">
+        #{uAvatar,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.facai.facai.entity.UserInfo">
+    update userinfo
+    <set>
+      <if test="uNickname != null">
+        u_nickname = #{uNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null">
+        u_password = #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uState != null">
+        u_state = #{uState,jdbcType=INTEGER},
+      </if>
+      <if test="uType != null">
+        u_type = #{uType,jdbcType=INTEGER},
+      </if>
+      <if test="uOpenid != null">
+        u_openid = #{uOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="uRegtype != null">
+        u_regType = #{uRegtype,jdbcType=INTEGER},
+      </if>
+      <if test="uCreatetime != null">
+        u_createtime = #{uCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uPhone != null">
+        u_phone = #{uPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="uEmail != null">
+        u_email = #{uEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="uLogintime != null">
+        u_loginTime = #{uLogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uAvatar != null">
+        u_avatar = #{uAvatar,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where u_id = #{uId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.facai.facai.entity.UserInfo">
+    update userinfo
+    set u_nickname = #{uNickname,jdbcType=VARCHAR},
+      u_password = #{uPassword,jdbcType=VARCHAR},
+      u_state = #{uState,jdbcType=INTEGER},
+      u_type = #{uType,jdbcType=INTEGER},
+      u_openid = #{uOpenid,jdbcType=VARCHAR},
+      u_regType = #{uRegtype,jdbcType=INTEGER},
+      u_createtime = #{uCreatetime,jdbcType=TIMESTAMP},
+      u_phone = #{uPhone,jdbcType=VARCHAR},
+      u_email = #{uEmail,jdbcType=VARCHAR},
+      u_loginTime = #{uLogintime,jdbcType=TIMESTAMP},
+      u_avatar = #{uAvatar,jdbcType=VARCHAR}
+    where u_id = #{uId,jdbcType=INTEGER}
+  </update>
+</mapper>

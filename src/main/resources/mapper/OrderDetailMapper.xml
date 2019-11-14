@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.facai.facai.dao.OrderDetailMapper">
+  <resultMap id="BaseResultMap" type="com.facai.facai.entity.OrderDetail">
+    <constructor>
+      <idArg column="od_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="od_oid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="od_psid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="od_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="od_total" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    od_id, od_oid, od_psid, od_count, od_total
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from orderDetail
+    where od_id = #{odId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from orderDetail
+    where od_id = #{odId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.facai.facai.entity.OrderDetail">
+    insert into orderDetail (od_id, od_oid, od_psid, 
+      od_count, od_total)
+    values (#{odId,jdbcType=INTEGER}, #{odOid,jdbcType=INTEGER}, #{odPsid,jdbcType=INTEGER}, 
+      #{odCount,jdbcType=INTEGER}, #{odTotal,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.facai.facai.entity.OrderDetail">
+    insert into orderDetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="odId != null">
+        od_id,
+      </if>
+      <if test="odOid != null">
+        od_oid,
+      </if>
+      <if test="odPsid != null">
+        od_psid,
+      </if>
+      <if test="odCount != null">
+        od_count,
+      </if>
+      <if test="odTotal != null">
+        od_total,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="odId != null">
+        #{odId,jdbcType=INTEGER},
+      </if>
+      <if test="odOid != null">
+        #{odOid,jdbcType=INTEGER},
+      </if>
+      <if test="odPsid != null">
+        #{odPsid,jdbcType=INTEGER},
+      </if>
+      <if test="odCount != null">
+        #{odCount,jdbcType=INTEGER},
+      </if>
+      <if test="odTotal != null">
+        #{odTotal,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.facai.facai.entity.OrderDetail">
+    update orderDetail
+    <set>
+      <if test="odOid != null">
+        od_oid = #{odOid,jdbcType=INTEGER},
+      </if>
+      <if test="odPsid != null">
+        od_psid = #{odPsid,jdbcType=INTEGER},
+      </if>
+      <if test="odCount != null">
+        od_count = #{odCount,jdbcType=INTEGER},
+      </if>
+      <if test="odTotal != null">
+        od_total = #{odTotal,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where od_id = #{odId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.facai.facai.entity.OrderDetail">
+    update orderDetail
+    set od_oid = #{odOid,jdbcType=INTEGER},
+      od_psid = #{odPsid,jdbcType=INTEGER},
+      od_count = #{odCount,jdbcType=INTEGER},
+      od_total = #{odTotal,jdbcType=DECIMAL}
+    where od_id = #{odId,jdbcType=INTEGER}
+  </update>
+
+</mapper>
