@@ -48,7 +48,6 @@ public class UserInfoController {
         map.put("avatar",userInfo.getuAvatar());
         map.put("token",token);
 
-
         redisTemplate.opsForValue().set("u", JsonUtil.beanToJson(userInfo));
 
         return Resp.success("登录成功",map);

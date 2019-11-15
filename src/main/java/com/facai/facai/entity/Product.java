@@ -1,6 +1,7 @@
 package com.facai.facai.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Product {
     private Integer pId;
@@ -26,6 +27,8 @@ public class Product {
     private String pCover;
 
     private String pImgarray;
+
+    private List<ProductSpecs> pSpecsList;
 
     public Product(Integer pId, String pTitle, Integer pState, Integer pTypeid, Date pCreatetime, String pDetail, String pBrief, String pBrand, String pSource, String pOrigin, String pCover, String pImgarray) {
         this.pId = pId;
@@ -140,5 +143,13 @@ public class Product {
 
     public void setpImgarray(String pImgarray) {
         this.pImgarray = pImgarray == null ? null : pImgarray.trim();
+    }
+
+    public List<ProductSpecs> getpSpecsList() {
+        return pSpecsList;
+    }
+
+    public void setpSpecsList(List<ProductSpecs> pSpecsList) {
+        this.pSpecsList = pSpecsList == null ? null : pSpecsList;
     }
 }

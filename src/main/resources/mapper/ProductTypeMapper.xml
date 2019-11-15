@@ -12,6 +12,13 @@
   <sql id="Base_Column_List">
     pt_id, pt_name, pt_state, pt_createtime
   </sql>
+  <select id="selectAllProductType" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from productType
+    where `pt_state` = 1
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

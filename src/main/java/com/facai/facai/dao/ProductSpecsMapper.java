@@ -16,4 +16,5 @@ public interface ProductSpecsMapper {
     int updateByPrimaryKeySelective(ProductSpecs record);
 
     int updateByPrimaryKey(ProductSpecs record);
+
 }

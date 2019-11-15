@@ -1,7 +1,11 @@
 package com.facai.facai.dao;
 
 import com.facai.facai.entity.Product;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+@Component
 public interface ProductMapper {
     int deleteByPrimaryKey(Integer pId);
 
@@ -14,4 +18,7 @@ public interface ProductMapper {
     int updateByPrimaryKeySelective(Product record);
 
     int updateByPrimaryKey(Product record);
+
+    //根据分类ID查询所有产品
+    List<Product> selectAllProduct(Integer typeId);
 }
