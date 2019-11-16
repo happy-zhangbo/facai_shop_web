@@ -17,6 +17,8 @@ public class ProductSpecs {
 
     private Integer sProductid;
 
+    private Product product;
+
     public ProductSpecs(Integer sId, String sName, Integer sState, BigDecimal sPrice, String sBrief, Integer sStock, Integer sProductid) {
         this.sId = sId;
         this.sName = sName;
@@ -85,5 +87,13 @@ public class ProductSpecs {
 
     public void setsProductid(Integer sProductid) {
         this.sProductid = sProductid;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

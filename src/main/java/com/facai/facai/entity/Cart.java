@@ -13,6 +13,9 @@ public class Cart {
 
     private BigDecimal cTotal;
 
+    private ProductSpecs productSpecs;
+
+
     public Cart(Integer cId, Integer cPsid, Integer cCount, Integer cUserid, BigDecimal cTotal) {
         this.cId = cId;
         this.cPsid = cPsid;
@@ -63,5 +66,13 @@ public class Cart {
 
     public void setcTotal(BigDecimal cTotal) {
         this.cTotal = cTotal;
+    }
+
+    public ProductSpecs getProductSpecs() {
+        return productSpecs;
+    }
+
+    public void setProductSpecs(ProductSpecs productSpecs) {
+        this.productSpecs = productSpecs;
     }
 }

@@ -23,7 +23,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<Cart> selectAllCartByUserId(Integer userId) {
 
-        return null;
+        return cartMapper.selectAllCartByUserId(userId);
     }
 
     @Override

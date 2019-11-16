@@ -9,19 +9,41 @@
       <arg column="c_userid" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="c_total" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
     </constructor>
+    <association property="productSpecs" javaType="com.facai.facai.entity.ProductSpecs">
+      <id column="s_id" property="sId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <result column="s_name" property="sName" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="s_price"  property="sPrice" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <result column="s_state" property="sState" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <result column="s_productid" property="sProductid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <association property="product" javaType="com.facai.facai.entity.Product">
+        <id column="p_id" property="pId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="p_title" property="pTitle" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="p_state" property="pState" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="p_cover" property="pCover" javaType="java.lang.String" jdbcType="VARCHAR" />
+      </association>
+    </association>
   </resultMap>
   <sql id="Base_Column_List">
     c_id, c_psid, c_count, c_userid, c_total
   </sql>
-
-
-
+  <sql id="Base_Column_List_r">
+    c_id, c_psid, c_count, c_userid, c_total, s_id, s_name, s_state, s_price, s_productid,p_id, p_title,p_cover,p_state
+  </sql>
+  <select id="selectAllCartByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List_r" />
+    FROM `cart`
+    LEFT JOIN `productSpecs` ON `c_psid` = `s_id`
+    LEFT JOIN `product` ON `s_productid` =  `p_id`
+    WHERE `c_userid` = #{userId,jdbcType=INTEGER}
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from cart
     where c_id = #{cId,jdbcType=INTEGER}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cart
     where c_id = #{cId,jdbcType=INTEGER}

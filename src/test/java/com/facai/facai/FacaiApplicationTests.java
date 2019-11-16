@@ -1,5 +1,6 @@
 package com.facai.facai;
 
+import com.facai.facai.dao.CartMapper;
 import com.facai.facai.dao.ProductMapper;
 import com.facai.facai.dao.UserInfoMapper;
 import com.facai.facai.entity.UserInfo;
@@ -20,11 +21,16 @@ class FacaiApplicationTests {
     private ProductMapper productMapper;
 
     @Autowired
+    private CartMapper cartMapper;
+
+    @Autowired
     RedisTemplate redisTemplate;
 
     @Test
     void contextLoads() {
-        System.out.println(JsonUtil.listToJson(productMapper.selectAllProduct(1)));
+//        System.out.println(JsonUtil.listToJson(productMapper.selectAllProduct(1)));
+
+        System.out.println(cartMapper.deleteByCIdAndUserId(1,5));
     }
 
 }
