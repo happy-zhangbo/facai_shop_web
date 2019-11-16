@@ -13,6 +13,9 @@
   <sql id="Base_Column_List">
     c_id, c_psid, c_count, c_userid, c_total
   </sql>
+
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

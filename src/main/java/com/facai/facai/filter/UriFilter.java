@@ -59,6 +59,7 @@ public class UriFilter implements Filter {
                 response.getWriter().write(JsonUtil.beanToJson(Resp.error("Token无效")));
                 return;
             }
+
             filterChain.doFilter(request, response);
             return;
         }
