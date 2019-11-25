@@ -23,8 +23,7 @@ public class JsonUtil {
     public static <T> List<T> toList(String json, Class<T> t) {
         return JSON.parseArray(json, t);
     }
-
-
+    
     /**
      * json字符串转map集合
      * @param jsonStr

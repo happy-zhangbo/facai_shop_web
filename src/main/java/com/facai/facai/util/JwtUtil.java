@@ -9,10 +9,13 @@ import com.facai.facai.entity.UserInfo;
 import com.sun.org.apache.xml.internal.security.algorithms.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 public class JwtUtil {
+
 
 
     private static Logger logger = LoggerFactory.getLogger(JwtUtil.class);
@@ -31,7 +34,7 @@ public class JwtUtil {
             String token = JWT.create()
                     .withIssuer("签发者")
                     .withSubject("用户")//主题，科目
-                    .withClaim("uId", userInfo.getuId())
+                    .withClaim("uId", userInfo.getuId().toString())
                     .withExpiresAt(new Date(System.currentTimeMillis()+maxAge))
                     .sign(signer);
             return token;
@@ -54,7 +57,7 @@ public class JwtUtil {
             DecodedJWT jwt = verifier.verify(token);
             System.out.println("认证通过：");
             System.out.println("issuer: " + jwt.getIssuer());
-            System.out.println("username: " + jwt.getClaim("username").asString());
+            System.out.println("uId: " + jwt.getClaim("uId").asString());
             System.out.println("过期时间：      " + jwt.getExpiresAt());
             return true;
         } catch (IllegalArgumentException e) {
@@ -64,6 +67,18 @@ public class JwtUtil {
             System.out.println("校验失败");
         }
         return false;
+    }
+
+
+    /**
+     * 获取用户信息
+     */
+    public static String getCurUserId(String token){
+        Algorithm algorithm = Algorithm.HMAC256(secret);
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT jwt = verifier.verify(token);
+        String uid = jwt.getClaim("uId").asString();
+        return uid;
     }
 
 }

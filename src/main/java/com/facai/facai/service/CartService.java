@@ -1,6 +1,7 @@
 package com.facai.facai.service;
 
 import com.facai.facai.entity.Cart;
+import com.facai.facai.entity.ProductSpecs;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 public interface CartService {
 
     //加入购物车
-    public int addToCart(Cart cart);
+    public int addToCart(Integer userId,Integer count, ProductSpecs productSpecs);
 
     //查询购物车
     public List<Cart> selectAllCartByUserId(Integer userId);

@@ -24,7 +24,9 @@ public class Order {
 
     private String oRemarks;
 
-    public Order(Integer oId, String oSerialnum, Integer oPaymethod, Date oCreatetime, Integer oState, Integer oType, String oTransactionnum, BigDecimal oTotalamount, Integer oUserid, String oRemarks) {
+    private String oAddress;
+
+    public Order(Integer oId, String oSerialnum, Integer oPaymethod, Date oCreatetime, Integer oState, Integer oType, String oTransactionnum, BigDecimal oTotalamount, Integer oUserid, String oRemarks, String oAddress) {
         this.oId = oId;
         this.oSerialnum = oSerialnum;
         this.oPaymethod = oPaymethod;
@@ -35,6 +37,7 @@ public class Order {
         this.oTotalamount = oTotalamount;
         this.oUserid = oUserid;
         this.oRemarks = oRemarks;
+        this.oAddress = oAddress;
     }
 
     public Order() {
@@ -119,5 +122,13 @@ public class Order {
 
     public void setoRemarks(String oRemarks) {
         this.oRemarks = oRemarks == null ? null : oRemarks.trim();
+    }
+
+    public String getoAddress() {
+        return oAddress;
+    }
+
+    public void setoAddress(String oAddress) {
+        this.oAddress = oAddress == null ? null : oAddress.trim();
     }
 }

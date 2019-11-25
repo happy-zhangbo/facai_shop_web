@@ -34,7 +34,6 @@ public class FastJson2JsonRedisSerializer<T> implements RedisSerializer<T> {
             return null;
         }
         String str = new String(bytes, DEFAULT_CHARSET);
-        System.out.println(str);
         return (T) JsonUtil.jsonToBean(str, clazz);
     }
 

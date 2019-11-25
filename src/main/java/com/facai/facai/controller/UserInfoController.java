@@ -27,7 +27,7 @@ public class UserInfoController {
     private UserInfoService userInfoService;
 
     @Autowired
-    RedisTemplate redisTemplate;
+    private RedisUtil redisUtil;
 
     //微信小程序登录
     @RequestMapping(value = "login_wxLogin")
@@ -47,8 +47,7 @@ public class UserInfoController {
         map.put("nickName",userInfo.getuNickname());
         map.put("avatar",userInfo.getuAvatar());
         map.put("token",token);
-
-        redisTemplate.opsForValue().set(token, JsonUtil.beanToJson(userInfo));
+        redisUtil.setUserInfo(userInfo);
 
         return Resp.success("登录成功",map);
     }

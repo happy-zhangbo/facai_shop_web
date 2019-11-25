@@ -1,9 +1,7 @@
 package com.facai.facai.dao;
 
 import com.facai.facai.entity.Order;
-import org.springframework.stereotype.Component;
 
-@Component
 public interface OrderMapper {
     int deleteByPrimaryKey(Integer oId);
 
