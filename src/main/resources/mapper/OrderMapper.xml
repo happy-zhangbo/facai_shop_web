@@ -13,11 +13,12 @@
       <arg column="o_totalAmount" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
       <arg column="o_userid" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="o_remarks" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="o_address" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
     o_id, o_serialNum, o_payMethod, o_createtime, o_state, o_type, o_transactionNum, 
-    o_totalAmount, o_userid, o_remarks
+    o_totalAmount, o_userid, o_remarks, o_address
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -33,11 +34,11 @@
     insert into order (o_id, o_serialNum, o_payMethod, 
       o_createtime, o_state, o_type, 
       o_transactionNum, o_totalAmount, o_userid, 
-      o_remarks)
+      o_remarks, o_address)
     values (#{oId,jdbcType=INTEGER}, #{oSerialnum,jdbcType=VARCHAR}, #{oPaymethod,jdbcType=INTEGER}, 
       #{oCreatetime,jdbcType=TIMESTAMP}, #{oState,jdbcType=INTEGER}, #{oType,jdbcType=INTEGER}, 
       #{oTransactionnum,jdbcType=VARCHAR}, #{oTotalamount,jdbcType=DECIMAL}, #{oUserid,jdbcType=INTEGER}, 
-      #{oRemarks,jdbcType=VARCHAR})
+      #{oRemarks,jdbcType=VARCHAR}, #{oAddress,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.facai.facai.entity.Order">
     insert into order
@@ -72,6 +73,9 @@
       <if test="oRemarks != null">
         o_remarks,
       </if>
+      <if test="oAddress != null">
+        o_address,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="oId != null">
@@ -103,6 +107,9 @@
       </if>
       <if test="oRemarks != null">
         #{oRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="oAddress != null">
+        #{oAddress,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -136,6 +143,9 @@
       <if test="oRemarks != null">
         o_remarks = #{oRemarks,jdbcType=VARCHAR},
       </if>
+      <if test="oAddress != null">
+        o_address = #{oAddress,jdbcType=VARCHAR},
+      </if>
     </set>
     where o_id = #{oId,jdbcType=INTEGER}
   </update>
@@ -149,8 +159,10 @@
       o_transactionNum = #{oTransactionnum,jdbcType=VARCHAR},
       o_totalAmount = #{oTotalamount,jdbcType=DECIMAL},
       o_userid = #{oUserid,jdbcType=INTEGER},
-      o_remarks = #{oRemarks,jdbcType=VARCHAR}
+      o_remarks = #{oRemarks,jdbcType=VARCHAR},
+      o_address = #{oAddress,jdbcType=VARCHAR}
     where o_id = #{oId,jdbcType=INTEGER}
   </update>
+
 
 </mapper>
