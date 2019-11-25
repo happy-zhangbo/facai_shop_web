@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -18,7 +19,7 @@ import java.util.Date;
 class FacaiApplicationTests {
 
     @Autowired
-    private ProductMapper productMapper;
+    private UserInfoMapper userInfoMapper;
 
     @Autowired
     private CartMapper cartMapper;
@@ -28,9 +29,7 @@ class FacaiApplicationTests {
 
     @Test
     void contextLoads() {
-//        System.out.println(JsonUtil.listToJson(productMapper.selectAllProduct(1)));
-
-        System.out.println(cartMapper.deleteByCIdAndUserId(1,5));
+        System.out.println(JsonUtil.listToJson(cartMapper.selectAllCartByUserId(5)));
     }
 
 }
