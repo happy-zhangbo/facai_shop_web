@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.facai.facai.dao.AddressMapper">
+  <resultMap id="BaseResultMap" type="com.facai.facai.entity.Address">
+    <constructor>
+      <idArg column="a_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="a_userId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="a_city" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="a_address" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="a_defatult" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="a_link" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="a_tel" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    a_id, a_userId, a_city, a_address, a_defatult, a_link, a_tel
+  </sql>
+
+  <select id="selectAllAddress" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from address
+    where a_userId = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="selectDefaultAddressByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from address
+    where a_userId = #{userId,jdbcType=INTEGER} and a_defatult = 1
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from address
+    where a_id = #{aId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from address
+    where a_id = #{aId,jdbcType=INTEGER} and a_userId = #{aUserid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.facai.facai.entity.Address">
+    insert into address (a_id, a_userId, a_city, 
+      a_address, a_defatult, a_link, 
+      a_tel)
+    values (#{aId,jdbcType=INTEGER}, #{aUserid,jdbcType=INTEGER}, #{aCity,jdbcType=VARCHAR}, 
+      #{aAddress,jdbcType=VARCHAR}, #{aDefatult,jdbcType=INTEGER}, #{aLink,jdbcType=VARCHAR}, 
+      #{aTel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.facai.facai.entity.Address">
+    insert into address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="aId != null">
+        a_id,
+      </if>
+      <if test="aUserid != null">
+        a_userId,
+      </if>
+      <if test="aCity != null">
+        a_city,
+      </if>
+      <if test="aAddress != null">
+        a_address,
+      </if>
+      <if test="aDefatult != null">
+        a_defatult,
+      </if>
+      <if test="aLink != null">
+        a_link,
+      </if>
+      <if test="aTel != null">
+        a_tel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="aId != null">
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="aUserid != null">
+        #{aUserid,jdbcType=INTEGER},
+      </if>
+      <if test="aCity != null">
+        #{aCity,jdbcType=VARCHAR},
+      </if>
+      <if test="aAddress != null">
+        #{aAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="aDefatult != null">
+        #{aDefatult,jdbcType=INTEGER},
+      </if>
+      <if test="aLink != null">
+        #{aLink,jdbcType=VARCHAR},
+      </if>
+      <if test="aTel != null">
+        #{aTel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.facai.facai.entity.Address">
+    update address
+    <set>
+      <if test="aUserid != null">
+        a_userId = #{aUserid,jdbcType=INTEGER},
+      </if>
+      <if test="aCity != null">
+        a_city = #{aCity,jdbcType=VARCHAR},
+      </if>
+      <if test="aAddress != null">
+        a_address = #{aAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="aDefatult != null">
+        a_defatult = #{aDefatult,jdbcType=INTEGER},
+      </if>
+      <if test="aLink != null">
+        a_link = #{aLink,jdbcType=VARCHAR},
+      </if>
+      <if test="aTel != null">
+        a_tel = #{aTel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where a_id = #{aId,jdbcType=INTEGER} and a_userId = #{aUserid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.facai.facai.entity.Address">
+    update address
+    set a_userId = #{aUserid,jdbcType=INTEGER},
+      a_city = #{aCity,jdbcType=VARCHAR},
+      a_address = #{aAddress,jdbcType=VARCHAR},
+      a_defatult = #{aDefatult,jdbcType=INTEGER},
+      a_link = #{aLink,jdbcType=VARCHAR},
+      a_tel = #{aTel,jdbcType=VARCHAR}
+    where a_id = #{aId,jdbcType=INTEGER} and a_userId = #{aUserid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByDefault" parameterType="com.facai.facai.entity.Address">
+    update address
+    set a_defatult = 0
+    where a_defatult = 1 and a_userId = #{aUserid,jdbcType=INTEGER}
+  </update>
+</mapper>

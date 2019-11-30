@@ -28,7 +28,6 @@ public class ProductController {
         }else{
             return Resp.error("产品分类数据为空");
         }
-
     }
 
     //根据分类ID查询所有产品

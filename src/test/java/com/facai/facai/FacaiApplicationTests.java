@@ -1,6 +1,7 @@
 package com.facai.facai;
 
 import com.facai.facai.dao.CartMapper;
+import com.facai.facai.dao.OrderMapper;
 import com.facai.facai.dao.ProductMapper;
 import com.facai.facai.dao.UserInfoMapper;
 import com.facai.facai.entity.UserInfo;
@@ -19,17 +20,14 @@ import java.util.Date;
 class FacaiApplicationTests {
 
     @Autowired
-    private UserInfoMapper userInfoMapper;
-
-    @Autowired
-    private CartMapper cartMapper;
+    private OrderMapper orderMapper;
 
     @Autowired
     RedisTemplate redisTemplate;
 
     @Test
     void contextLoads() {
-        System.out.println(JsonUtil.listToJson(cartMapper.selectAllCartByUserId(5)));
+        System.out.println(JsonUtil.beanToJson(orderMapper.selectOrderByOidAndUserId(1,5)));
     }
 
 }

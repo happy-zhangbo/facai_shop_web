@@ -19,4 +19,6 @@ public interface UserInfoMapper {
 
     //根据openid
     UserInfo selectByOpenId(String openid);
+
+
 }

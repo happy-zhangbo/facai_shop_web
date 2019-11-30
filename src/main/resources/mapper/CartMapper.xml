@@ -46,7 +46,7 @@
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cart
-    where c_id = #{cId,jdbcType=INTEGER}
+    where c_id = #{cId,jdbcType=INTEGER}  and c_userid = #{cUserid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.facai.facai.entity.Cart">
     insert into cart (c_id, c_psid, c_count, 
@@ -107,7 +107,7 @@
         c_total = #{cTotal,jdbcType=DECIMAL},
       </if>
     </set>
-    where c_id = #{cId,jdbcType=INTEGER}
+    where c_id = #{cId,jdbcType=INTEGER}  and c_userid = #{cUserid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.facai.facai.entity.Cart">
     update cart
@@ -115,7 +115,7 @@
       c_count = #{cCount,jdbcType=INTEGER},
       c_userid = #{cUserid,jdbcType=INTEGER},
       c_total = #{cTotal,jdbcType=DECIMAL}
-    where c_id = #{cId,jdbcType=INTEGER}
+    where c_id = #{cId,jdbcType=INTEGER}  and c_userid = #{cUserid,jdbcType=INTEGER}
   </update>
 
 </mapper>

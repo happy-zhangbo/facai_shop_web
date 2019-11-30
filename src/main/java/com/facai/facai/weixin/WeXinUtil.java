@@ -8,6 +8,7 @@ import okhttp3.Response;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class WeXinUtil {
 
@@ -29,6 +30,7 @@ public class WeXinUtil {
         System.out.println(resStr);
         return JsonUtil.jsonToBean(resStr, WxLoginResp.class);
     }
+
 
     public static void main(String[] args) throws IOException {
         WeXinUtil w = new WeXinUtil();

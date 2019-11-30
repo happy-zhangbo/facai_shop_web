@@ -93,4 +93,14 @@
     where od_id = #{odId,jdbcType=INTEGER}
   </update>
 
+  <insert id="insertBatchOrderDetail" parameterType="java.util.List">
+    insert into orderDetail (od_id, od_oid, od_psid,
+    od_count, od_total)
+    values
+    <foreach collection ="list" item="od" index="index"  separator ="," >
+      (#{od.odId,jdbcType=INTEGER}, #{od.odOid,jdbcType=INTEGER}, #{od.odPsid,jdbcType=INTEGER},
+      #{od.odCount,jdbcType=INTEGER}, #{od.odTotal,jdbcType=DECIMAL})
+    </foreach>
+  </insert>
+
 </mapper>

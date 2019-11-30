@@ -3,6 +3,8 @@ package com.facai.facai.dao;
 import com.facai.facai.entity.OrderDetail;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public interface OrderDetailMapper {
     int deleteByPrimaryKey(Integer odId);
@@ -16,4 +18,6 @@ public interface OrderDetailMapper {
     int updateByPrimaryKeySelective(OrderDetail record);
 
     int updateByPrimaryKey(OrderDetail record);
+
+    int insertBatchOrderDetail(List<OrderDetail> list);
 }
