@@ -39,6 +39,9 @@ public class OrderServiceImpl implements OrderService {
         order.setoCreatetime(new Date());
         if(orderMapper.insert(order) > 0){
             if(orderDetailMapper.insertBatchOrderDetail(order.getOrderDetail()) > 0){
+                //订单提交数据库成功后，根据支付方式调用统一下单接口
+
+
                 return 1;
             }else{
                 logger.error("订单详情添加失败");

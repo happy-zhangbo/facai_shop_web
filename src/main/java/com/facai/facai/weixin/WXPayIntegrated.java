@@ -14,7 +14,7 @@ public class WXPayIntegrated {
      * 统一下单
      * @param order
      */
-    public static void dounifiedorder(Order order){
+    public static String dounifiedorder(Order order){
         try {
             Map<String,String> map = new HashMap<String,String>();
             map.put("appid", Constant.appid);
@@ -28,11 +28,12 @@ public class WXPayIntegrated {
             map.put("notify_url","47.94.143.161");
             map.put("trade_type","JSAPI");
 
+            return WXPayUtil.mapToXml(map);
         }catch (Exception e){
             e.printStackTrace();
         }
 
-
+        return null;
     }
 
 

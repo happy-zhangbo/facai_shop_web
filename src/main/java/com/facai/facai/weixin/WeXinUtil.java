@@ -1,6 +1,7 @@
 package com.facai.facai.weixin;
 
 import com.facai.facai.constant.Constant;
+import com.facai.facai.entity.Order;
 import com.facai.facai.util.JsonUtil;
 import com.facai.facai.util.OkHttp;
 import okhttp3.Response;
@@ -29,6 +30,13 @@ public class WeXinUtil {
         }
         System.out.println(resStr);
         return JsonUtil.jsonToBean(resStr, WxLoginResp.class);
+    }
+
+    //访问微信支付统一下单接口
+    public static String wxPayUnifiedorder(Order order){
+
+
+        return "";
     }
 
 

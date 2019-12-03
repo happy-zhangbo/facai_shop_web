@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    //提交订单
+    //提交订单 （访问统一下单接口）
+
 
     //
 }
