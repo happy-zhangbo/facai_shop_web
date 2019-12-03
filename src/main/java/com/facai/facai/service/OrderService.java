@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @auth Auth :zhangbo
@@ -15,7 +16,7 @@ import java.util.List;
 public interface OrderService {
 
     //提交订单
-    public int commitOrder(Order order) throws Exception;
+    public Map<String,String> commitOrder(Order order,String openid);
 
     //支付订单
     public int payOrder();

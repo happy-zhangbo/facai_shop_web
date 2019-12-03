@@ -4,9 +4,11 @@ import com.facai.facai.constant.Constant;
 import com.facai.facai.entity.Order;
 import com.facai.facai.util.JsonUtil;
 import com.facai.facai.util.OkHttp;
+import com.facai.facai.util.Resp;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -33,10 +35,29 @@ public class WeXinUtil {
     }
 
     //访问微信支付统一下单接口
-    public static String wxPayUnifiedorder(Order order){
+    public static Map<String,String> wxPayUnifiedorder(Order order,String openid){
+        Map<String,String> map = WXPayIntegrated.dounifiedorder(order,openid);
+        Map<String,String> resMap = new HashMap<String,String>();
+        if(null == map){
+            return null;
+        }
+        if("SUCCESS".equals(map.get("return_code"))){
+            try {
+                resMap.put("return_code","SUCCESS");
+                resMap.put("timeStamp",new Date().getTime()+"");
+                resMap.put("nonceStr",WXPayIntegrated.getRandomString(32));
+                resMap.put("package","prepay_id="+map.get("prepay_id"));
+                resMap.put("signType","MD5");
+                resMap.put("paySign",WXPayUtil.generateSignature(resMap,Constant.payKey));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
-
-        return "";
+        }else{
+            resMap.put("return_code","FAIL");
+            resMap.put("return_msg",map.get("return_msg"));
+        }
+        return resMap;
     }
 
 

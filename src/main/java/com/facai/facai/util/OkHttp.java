@@ -1,11 +1,16 @@
 package com.facai.facai.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import okhttp3.*;
+import okio.BufferedSink;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.rmi.server.RemoteRef;
 import java.util.HashMap;
@@ -116,7 +121,9 @@ public class OkHttp {
      * @return
      */
     public static Response doPost(String url, Map<String,String> map){
-        return  mInstance.inner_DoPost(url,map);
+
+        RequestBody requestBody = mInstance.setRequestBody(map);
+        return  mInstance.inner_DoPost(url,requestBody);
     }
 
     /**
@@ -127,7 +134,36 @@ public class OkHttp {
     public static String doPostString(String url, Map<String,String> map){
         String res = "";
         try {
-            res = mInstance.inner_DoPost(url,map).body().string();
+            RequestBody requestBody = mInstance.setRequestBody(map);
+            res = mInstance.inner_DoPost(url,requestBody).body().string();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    /**
+     * 对外提供的POST获取String的方法
+     * @param url
+     * @return
+     */
+    public static String doPostString(String url, String param){
+        String res = "";
+        try {
+            RequestBody requestBody = new RequestBody() {
+                @Nullable
+                @Override
+                public MediaType contentType() {
+                    return MediaType.parse("text/xml; charset=utf-8");
+                }
+
+                @Override
+                public void writeTo(@NotNull BufferedSink bufferedSink) throws IOException {
+                    DataOutputStream out = new DataOutputStream(bufferedSink.outputStream());
+                    out.writeBytes(param);    //写入流
+                }
+            };
+            res = mInstance.inner_DoPost(url,requestBody).body().string();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -139,12 +175,9 @@ public class OkHttp {
      * @param url
      * @return
      */
-    private Response inner_DoPost(String url,Map<String,String> map){
-        RequestBody requestBody = setRequestBody(map);
+    private Response inner_DoPost(String url,RequestBody requestBody){
+
         Request request = new Request.Builder().post(requestBody).url(url).build();
-        if(null == map){
-            map = new HashMap<String,String>();
-        }
 
         Response response = null;
         try {

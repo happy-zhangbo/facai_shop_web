@@ -5,6 +5,8 @@ import com.facai.facai.dao.OrderMapper;
 import com.facai.facai.entity.Order;
 import com.facai.facai.service.OrderService;
 import com.facai.facai.util.Tool;
+import com.facai.facai.weixin.WXPayUtil;
+import com.facai.facai.weixin.WeXinUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @auth Auth :zhangbo
@@ -32,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional(propagation = Propagation.REQUIRED , readOnly = false)
     @Override
-    public int commitOrder(Order order) throws Exception {
+    public Map<String,String> commitOrder(Order order,String openid) {
         //生成订单编号
         order.setoSerialnum(Tool.generateOrderNum());
         order.setoState(0);
@@ -40,15 +44,18 @@ public class OrderServiceImpl implements OrderService {
         if(orderMapper.insert(order) > 0){
             if(orderDetailMapper.insertBatchOrderDetail(order.getOrderDetail()) > 0){
                 //订单提交数据库成功后，根据支付方式调用统一下单接口
-
-
-                return 1;
+                Map<String,String> map = null;
+                if(order.getoPaymethod() == 1){ //微信支付
+                    map = WeXinUtil.wxPayUnifiedorder(order,openid);
+                }
+                return map;
             }else{
                 logger.error("订单详情添加失败");
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                return null;
             }
         }
-        return 0;
+        return null;
     }
 
     @Override
