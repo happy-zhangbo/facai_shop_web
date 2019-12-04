@@ -43,12 +43,14 @@ public class WeXinUtil {
         }
         if("SUCCESS".equals(map.get("return_code"))){
             try {
-                resMap.put("return_code","SUCCESS");
+                resMap.put("appId",Constant.appid);
                 resMap.put("timeStamp",new Date().getTime()+"");
                 resMap.put("nonceStr",WXPayIntegrated.getRandomString(32));
                 resMap.put("package","prepay_id="+map.get("prepay_id"));
                 resMap.put("signType","MD5");
                 resMap.put("paySign",WXPayUtil.generateSignature(resMap,Constant.payKey));
+                resMap.put("return_code","SUCCESS");
+                resMap.remove("appId");
             }catch (Exception e){
                 e.printStackTrace();
             }

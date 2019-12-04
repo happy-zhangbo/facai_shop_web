@@ -13,6 +13,8 @@ public class OrderDetail {
 
     private BigDecimal odTotal;
 
+    private Integer  ocId;
+
     public OrderDetail(Integer odId, Integer odOid, Integer odPsid, Integer odCount, BigDecimal odTotal) {
         this.odId = odId;
         this.odOid = odOid;
@@ -63,5 +65,13 @@ public class OrderDetail {
 
     public void setOdTotal(BigDecimal odTotal) {
         this.odTotal = odTotal;
+    }
+
+    public Integer getOcId() {
+        return ocId;
+    }
+
+    public void setOcId(Integer ocId) {
+        this.ocId = ocId;
     }
 }

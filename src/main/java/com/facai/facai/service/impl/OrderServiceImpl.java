@@ -48,6 +48,8 @@ public class OrderServiceImpl implements OrderService {
             }
 
             if(orderDetailMapper.insertBatchOrderDetail(order.getOrderDetail()) > 0){
+
+
                 //订单提交数据库成功后，根据支付方式调用统一下单接口
                 Map<String,String> map = null;
                 if(order.getoType() == 1){ //微信支付
