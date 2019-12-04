@@ -1,9 +1,6 @@
 package com.facai.facai;
 
-import com.facai.facai.dao.CartMapper;
-import com.facai.facai.dao.OrderMapper;
-import com.facai.facai.dao.ProductMapper;
-import com.facai.facai.dao.UserInfoMapper;
+import com.facai.facai.dao.*;
 import com.facai.facai.entity.UserInfo;
 import com.facai.facai.util.JsonUtil;
 import org.junit.jupiter.api.Test;
@@ -21,13 +18,15 @@ class FacaiApplicationTests {
 
     @Autowired
     private OrderMapper orderMapper;
+    @Autowired
+    private AddressMapper addressMapper;
 
     @Autowired
     RedisTemplate redisTemplate;
 
     @Test
     void contextLoads() {
-        System.out.println(JsonUtil.beanToJson(orderMapper.selectOrderByOidAndUserId(1,5)));
+        System.out.println(JsonUtil.beanToJson(addressMapper.selectAllAddress(5)));
     }
 
 }
