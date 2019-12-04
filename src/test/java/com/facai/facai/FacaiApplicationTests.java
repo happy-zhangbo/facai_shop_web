@@ -27,6 +27,7 @@ class FacaiApplicationTests {
 
     @Test
     void contextLoads() {
+        System.out.println(JsonUtil.listToJson(orderMapper.selectAllOrderByUserId(5)));
         System.out.println(JsonUtil.beanToJson(orderMapper.selectOrderByOidAndUserId(1,5)));
     }
 
