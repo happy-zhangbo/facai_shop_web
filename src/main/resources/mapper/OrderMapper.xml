@@ -14,18 +14,24 @@
       <arg column="o_userid" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="o_remarks" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="o_address" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="o_deliverytime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="o_confirmtime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
-    <collection property="orderDetail" resultMap="com.facai.facai.dao.OrderDetailMapper.BaseResultMap">
-
+    <collection property="orderDetail" ofType="com.facai.facai.entity.OrderDetail">
+      <result property="odId" column="od_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <result property="odOid" column="od_oid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <result property="odPsid" column="od_psid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <result property="odCount" column="od_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <result property="odTotal" column="od_total" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
     </collection>
   </resultMap>
   <sql id="Base_Column_List">
     o_id, o_serialNum, o_payMethod, o_createtime, o_state, o_type, o_transactionNum, 
-    o_totalAmount, o_userid, o_remarks, o_address
+    o_totalAmount, o_userid, o_remarks, o_address, o_deliverytime, o_confirmtime
   </sql>
   <sql id="Base_Column_List_Collection">
     o_id, o_serialNum, o_payMethod, o_createtime, o_state, o_type, o_transactionNum,
-    o_totalAmount, o_userid, o_remarks, o_address, od_id, od_oid, od_psid, od_count, od_total
+    o_totalAmount, o_userid, o_remarks, o_address, o_deliverytime, o_confirmtime, od_id, od_oid, od_psid, od_count, od_total
   </sql>
   <!-- 根据用户查询所有订单 -->
   <select id="selectAllOrderByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -43,6 +49,7 @@
     where o_id = #{oId,jdbcType=INTEGER} and  o_userid = #{userId,jdbcType=INTEGER}
   </select>
 
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -57,11 +64,13 @@
     insert into `order` (o_id, o_serialNum, o_payMethod,
       o_createtime, o_state, o_type, 
       o_transactionNum, o_totalAmount, o_userid, 
-      o_remarks, o_address)
+      o_remarks, o_address, o_deliverytime, 
+      o_confirmtime)
     values (#{oId,jdbcType=INTEGER}, #{oSerialnum,jdbcType=VARCHAR}, #{oPaymethod,jdbcType=INTEGER}, 
       #{oCreatetime,jdbcType=TIMESTAMP}, #{oState,jdbcType=INTEGER}, #{oType,jdbcType=INTEGER}, 
       #{oTransactionnum,jdbcType=VARCHAR}, #{oTotalamount,jdbcType=DECIMAL}, #{oUserid,jdbcType=INTEGER}, 
-      #{oRemarks,jdbcType=VARCHAR}, #{oAddress,jdbcType=VARCHAR})
+      #{oRemarks,jdbcType=VARCHAR}, #{oAddress,jdbcType=VARCHAR}, #{oDeliverytime,jdbcType=TIMESTAMP}, 
+      #{oConfirmtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.facai.facai.entity.Order">
     insert into `order`
@@ -99,6 +108,12 @@
       <if test="oAddress != null">
         o_address,
       </if>
+      <if test="oDeliverytime != null">
+        o_deliverytime,
+      </if>
+      <if test="oConfirmtime != null">
+        o_confirmtime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="oId != null">
@@ -133,6 +148,12 @@
       </if>
       <if test="oAddress != null">
         #{oAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="oDeliverytime != null">
+        #{oDeliverytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oConfirmtime != null">
+        #{oConfirmtime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -169,6 +190,12 @@
       <if test="oAddress != null">
         o_address = #{oAddress,jdbcType=VARCHAR},
       </if>
+      <if test="oDeliverytime != null">
+        o_deliverytime = #{oDeliverytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oConfirmtime != null">
+        o_confirmtime = #{oConfirmtime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where o_id = #{oId,jdbcType=INTEGER}
   </update>
@@ -183,9 +210,13 @@
       o_totalAmount = #{oTotalamount,jdbcType=DECIMAL},
       o_userid = #{oUserid,jdbcType=INTEGER},
       o_remarks = #{oRemarks,jdbcType=VARCHAR},
-      o_address = #{oAddress,jdbcType=VARCHAR}
+      o_address = #{oAddress,jdbcType=VARCHAR},
+      o_deliverytime = #{oDeliverytime,jdbcType=TIMESTAMP},
+      o_confirmtime = #{oConfirmtime,jdbcType=TIMESTAMP}
     where o_id = #{oId,jdbcType=INTEGER}
   </update>
+
+
 
 
 </mapper>
