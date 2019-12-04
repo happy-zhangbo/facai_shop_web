@@ -18,15 +18,14 @@ class FacaiApplicationTests {
 
     @Autowired
     private OrderMapper orderMapper;
-    @Autowired
-    private AddressMapper addressMapper;
 
     @Autowired
     RedisTemplate redisTemplate;
 
     @Test
     void contextLoads() {
-        System.out.println(JsonUtil.beanToJson(addressMapper.selectAllAddress(5)));
+        System.out.println(JsonUtil.listToJson(orderMapper.selectAllOrderByUserId(5)));
+        System.out.println(JsonUtil.beanToJson(orderMapper.selectOrderByOidAndUserId(1,5)));
     }
 
 }
