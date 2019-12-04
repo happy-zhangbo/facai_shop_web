@@ -3,6 +3,7 @@ package com.facai.facai.service.impl;
 import com.facai.facai.dao.OrderDetailMapper;
 import com.facai.facai.dao.OrderMapper;
 import com.facai.facai.entity.Order;
+import com.facai.facai.entity.OrderDetail;
 import com.facai.facai.service.OrderService;
 import com.facai.facai.util.Tool;
 import com.facai.facai.weixin.WXPayUtil;
@@ -42,11 +43,20 @@ public class OrderServiceImpl implements OrderService {
         order.setoState(0);
         order.setoCreatetime(new Date());
         if(orderMapper.insert(order) > 0){
+            for (OrderDetail orderDetail : order.getOrderDetail()) {
+                orderDetail.setOdOid(order.getoId());
+            }
+
             if(orderDetailMapper.insertBatchOrderDetail(order.getOrderDetail()) > 0){
                 //订单提交数据库成功后，根据支付方式调用统一下单接口
                 Map<String,String> map = null;
-                if(order.getoPaymethod() == 1){ //微信支付
+                if(order.getoType() == 1){ //微信支付
                     map = WeXinUtil.wxPayUnifiedorder(order,openid);
+                    if(null == map){
+                        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                    }
+                }else{
+                    TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 }
                 return map;
             }else{
@@ -54,6 +64,8 @@ public class OrderServiceImpl implements OrderService {
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return null;
             }
+        }else{
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
         return null;
     }

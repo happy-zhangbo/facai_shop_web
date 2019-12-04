@@ -60,7 +60,7 @@
     delete from `order`
     where o_id = #{oId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.facai.facai.entity.Order">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="oId" parameterType="com.facai.facai.entity.Order">
     insert into `order` (o_id, o_serialNum, o_payMethod,
       o_createtime, o_state, o_type, 
       o_transactionNum, o_totalAmount, o_userid, 
