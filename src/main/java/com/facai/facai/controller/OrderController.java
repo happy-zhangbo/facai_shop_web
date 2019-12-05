@@ -35,8 +35,7 @@ public class OrderController {
     @RequestMapping(value = "commit_unifiedorder")
     public Resp commit_unifiedorder(@RequestHeader String token, @RequestBody Order order){
         UserInfo userInfo = redisUtil.getUserInfo(token);
-
-        Map<String,String> map = orderService.commitOrder(order,userInfo.getuOpenid());
+        Map<String,String> map = orderService.commitOrder(order,userInfo);
         if(null != map){
             if("SUCCESS".equals(map.get("return_code"))){
                 return Resp.success("订单提交成功",map);

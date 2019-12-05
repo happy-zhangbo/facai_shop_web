@@ -51,6 +51,7 @@ public class WeXinUtil {
                 resMap.put("paySign",WXPayUtil.generateSignature(resMap,Constant.payKey));
                 resMap.put("return_code","SUCCESS");
                 resMap.remove("appId");
+
             }catch (Exception e){
                 e.printStackTrace();
             }

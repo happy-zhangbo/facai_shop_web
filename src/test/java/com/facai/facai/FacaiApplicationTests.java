@@ -10,7 +10,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 @SpringBootTest
@@ -18,14 +21,17 @@ class FacaiApplicationTests {
 
     @Autowired
     private OrderMapper orderMapper;
+    @Autowired
+    private CartMapper cartMapper;
 
     @Autowired
     RedisTemplate redisTemplate;
 
     @Test
     void contextLoads() {
-        System.out.println(JsonUtil.listToJson(orderMapper.selectAllOrderByUserId(5)));
-        System.out.println(JsonUtil.beanToJson(orderMapper.selectOrderByOidAndUserId(1,5)));
+        redisTemplate.opsForValue().set("zhangbo","123456789123456789",1800, TimeUnit.SECONDS);
+
+
     }
 
 }

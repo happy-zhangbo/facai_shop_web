@@ -2,6 +2,7 @@ package com.facai.facai.dao;
 
 import com.facai.facai.entity.Cart;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,4 +26,6 @@ public interface CartMapper {
 
     @Delete("delete from cart where c_id = #{cId} and c_userid = #{userId}")
     int deleteByCIdAndUserId(Integer cId,Integer userId);
+
+    int deleteBatchByCIdAndUserId(List<Integer> cIdList, Integer userId);
 }

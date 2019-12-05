@@ -48,6 +48,15 @@
     delete from cart
     where c_id = #{cId,jdbcType=INTEGER}  and c_userid = #{cUserid,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteBatchByCIdAndUserId">
+    DELETE FROM `cart` WHERE `c_id` IN
+    <foreach collection ="cIdList" item="cid" index="index"  separator ="," open="(" close=")">
+        #{cid}
+    </foreach>
+     AND `c_userid` = #{userId}
+  </delete>
+  
+  
   <insert id="insert" parameterType="com.facai.facai.entity.Cart">
     insert into cart (c_id, c_psid, c_count, 
       c_userid, c_total)

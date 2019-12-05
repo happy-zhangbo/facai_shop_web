@@ -1,6 +1,7 @@
 package com.facai.facai.service;
 
 import com.facai.facai.entity.Order;
+import com.facai.facai.entity.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.Map;
 public interface OrderService {
 
     //提交订单
-    public Map<String,String> commitOrder(Order order,String openid);
+    public Map<String,String> commitOrder(Order order, UserInfo userInfo);
 
     //支付订单
     public int payOrder();
@@ -26,5 +27,8 @@ public interface OrderService {
 
     //查询订单详情
     public Order selectOrderByOidAndUserId(Integer oId,Integer userId);
+
+    //取消订单
+    public int cancelOrderBySerialNum(String serialNum);
 
 }
