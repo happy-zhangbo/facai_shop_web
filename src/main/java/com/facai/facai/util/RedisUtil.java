@@ -30,4 +30,10 @@ public class RedisUtil {
     public void setOrder(String key, Map<String,String> map){
         redisTemplate.opsForValue().set(key, JSON.toJSONString(map),1800, TimeUnit.SECONDS);
     }
+
+    public Map<String,String> getOrder(String serialnum,Integer uid){
+        String str = redisTemplate.opsForValue().get("order:"+serialnum+"-"+uid).toString();
+        Map<String,String> map = (Map<String,String>)JSON.parse(str);
+        return map;
+    }
 }

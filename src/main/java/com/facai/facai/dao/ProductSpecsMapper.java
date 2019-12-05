@@ -1,7 +1,10 @@
 package com.facai.facai.dao;
 
+import com.facai.facai.entity.OrderDetail;
 import com.facai.facai.entity.ProductSpecs;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public interface ProductSpecsMapper {
@@ -16,5 +19,7 @@ public interface ProductSpecsMapper {
     int updateByPrimaryKeySelective(ProductSpecs record);
 
     int updateByPrimaryKey(ProductSpecs record);
+
+    List<ProductSpecs> selectOrderProductSpecs(List<OrderDetail> odList);
 
 }

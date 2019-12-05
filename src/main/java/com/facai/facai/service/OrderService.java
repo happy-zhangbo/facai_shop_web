@@ -29,6 +29,6 @@ public interface OrderService {
     public Order selectOrderByOidAndUserId(Integer oId,Integer userId);
 
     //取消订单
-    public int cancelOrderBySerialNum(String serialNum);
+    public int cancelOrderBySerialNum(String serialNum,Integer userId);
 
 }

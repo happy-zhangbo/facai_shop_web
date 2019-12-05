@@ -23,6 +23,6 @@ public interface OrderMapper {
 
     Order selectOrderByOidAndUserId(Integer oId,Integer userId);
 
-    int cancelOrderBySerialNum(String serialNum,String userId);
+    int cancelOrderBySerialNum(String serialNum,Integer userId);
 
 }

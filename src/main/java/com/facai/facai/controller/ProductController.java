@@ -24,7 +24,7 @@ public class ProductController {
 
         List<ProductType> list = productService.selectAllProductType();
         if(null != list && 0 != list.size()){
-            return Resp.success("查询完成",productService.selectAllProductType());
+            return Resp.success("查询完成",list);
         }else{
             return Resp.error("产品分类数据为空");
         }

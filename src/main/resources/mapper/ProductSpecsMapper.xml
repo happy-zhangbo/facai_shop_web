@@ -15,6 +15,16 @@
   <sql id="Base_Column_List">
     s_id, s_name, s_state, s_price, s_brief, s_stock, s_productid
   </sql>
+  <select id="selectOrderProductSpecs"  parameterType="java.util.List" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from productSpecs
+    where s_id in
+    <foreach collection ="list" item="od" index="index"  separator ="," open="(" close=")">
+      #{od.odPsid}
+    </foreach>
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

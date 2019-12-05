@@ -1,6 +1,8 @@
 package com.facai.facai;
 
 import com.facai.facai.dao.*;
+import com.facai.facai.entity.OrderDetail;
+import com.facai.facai.entity.ProductSpecs;
 import com.facai.facai.entity.UserInfo;
 import com.facai.facai.util.JsonUtil;
 import org.junit.jupiter.api.Test;
@@ -23,14 +25,36 @@ class FacaiApplicationTests {
     private OrderMapper orderMapper;
     @Autowired
     private CartMapper cartMapper;
+    @Autowired
+    private ProductSpecsMapper productSpecsMapper;
 
     @Autowired
     RedisTemplate redisTemplate;
 
     @Test
     void contextLoads() {
-        redisTemplate.opsForValue().set("zhangbo","123456789123456789",1800, TimeUnit.SECONDS);
+        List<OrderDetail> list = new ArrayList<OrderDetail>();
+        OrderDetail o1 = new OrderDetail();
+        o1.setOdPsid(1);
+        list.add(o1);
+        OrderDetail o2 = new OrderDetail();
+        o2.setOdPsid(2);
+        list.add(o2);
+        OrderDetail o3 = new OrderDetail();
+        o3.setOdPsid(3);
+        list.add(o3);
+        List<ProductSpecs> psList = productSpecsMapper.selectOrderProductSpecs(list);
+        BigDecimal res = new BigDecimal(0);
+        int i = 0;
+        for (ProductSpecs productSpecs:psList) {
+            res = res.add(productSpecs.getsPrice());
+            OrderDetail od = list.get(i);
+            od.setOdTotal(res);
+            list.set(i,od);
+            i++;
+        }
 
+        System.out.println(res.intValue()+"");
 
     }
 

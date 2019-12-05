@@ -9,6 +9,7 @@ import com.facai.facai.util.JsonUtil;
 import com.facai.facai.util.OkHttp;
 import okhttp3.Response;
 
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class WXPayIntegrated {
 
 
             map.put("out_trade_no",order.getoSerialnum());
-            map.put("total_fee","1");
+            map.put("total_fee",order.getoTotalamount().multiply(new BigDecimal(100)).intValue()+"");
             map.put("spbill_create_ip","47.94.143.161");
             map.put("notify_url","47.94.143.161");
             map.put("trade_type","JSAPI");

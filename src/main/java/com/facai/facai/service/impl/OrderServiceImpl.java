@@ -3,8 +3,10 @@ package com.facai.facai.service.impl;
 import com.facai.facai.dao.CartMapper;
 import com.facai.facai.dao.OrderDetailMapper;
 import com.facai.facai.dao.OrderMapper;
+import com.facai.facai.dao.ProductSpecsMapper;
 import com.facai.facai.entity.Order;
 import com.facai.facai.entity.OrderDetail;
+import com.facai.facai.entity.ProductSpecs;
 import com.facai.facai.entity.UserInfo;
 import com.facai.facai.service.OrderService;
 import com.facai.facai.util.RedisUtil;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -38,6 +41,9 @@ public class OrderServiceImpl implements OrderService {
     private OrderDetailMapper orderDetailMapper;
 
     @Autowired
+    private ProductSpecsMapper productSpecsMapper;
+
+    @Autowired
     private RedisUtil redisUtil;
 
 
@@ -49,21 +55,21 @@ public class OrderServiceImpl implements OrderService {
         order.setoSerialnum(Tool.generateOrderNum());
         order.setoState(0);
         order.setoCreatetime(new Date());
+        order.setoUserid(userInfo.getuId());
+        //计算价格
+        order.setoTotalamount(addendTotal(order.getOrderDetail()));
         if(orderMapper.insert(order) > 0){
+            // 清空购物车
+            List<Integer> cIdList = new ArrayList<Integer>();
             for (OrderDetail orderDetail : order.getOrderDetail()) {
                 orderDetail.setOdOid(order.getoId());
+                cIdList.add(orderDetail.getOcId());
             }
 
             if(orderDetailMapper.insertBatchOrderDetail(order.getOrderDetail()) > 0){
-                // 清空购物车
-                List<Integer> cIdList = new ArrayList<Integer>();
-                for (OrderDetail orderDetail : order.getOrderDetail()){
-                    cIdList.add(orderDetail.getOcId());
-                }
                 if(cartMapper.deleteBatchByCIdAndUserId(cIdList,userInfo.getuId()) <= 0){
                     return null;
                 }
-
                 //订单提交数据库成功后，根据支付方式调用统一下单接口
 
                 if(order.getoType() == 1){ //微信支付
@@ -87,6 +93,21 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
+    public BigDecimal addendTotal(List<OrderDetail> list){
+
+        List<ProductSpecs> psList = productSpecsMapper.selectOrderProductSpecs(list);
+        BigDecimal res = new BigDecimal(0);
+        int i = 0;
+        for (ProductSpecs productSpecs:psList) {
+            res = res.add(productSpecs.getsPrice());
+            OrderDetail od = list.get(i);
+            od.setOdTotal(res);
+            list.set(i,od);
+            i++;
+        }
+        return res;
+    }
+
     @Override
     public int payOrder() {
 
@@ -104,7 +125,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public int cancelOrderBySerialNum(String serialNum) {
-        return 0;
+    public int cancelOrderBySerialNum(String serialNum,Integer userId) {
+        return orderMapper.cancelOrderBySerialNum(serialNum,userId);
     }
 }

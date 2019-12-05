@@ -216,8 +216,8 @@
     where o_id = #{oId,jdbcType=INTEGER}
   </update>
   <update id="cancelOrderBySerialNum" parameterType="com.facai.facai.entity.Order">
-        update `order`
-    set o_state = -1,
+    update `order`
+    set o_state = -1
     where o_serialNum = #{oSerialnum,jdbcType=VARCHAR} and o_userid = #{oUserid,jdbcType=INTEGER}
   </update>
 
