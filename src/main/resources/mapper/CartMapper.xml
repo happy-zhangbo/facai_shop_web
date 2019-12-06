@@ -12,6 +12,7 @@
     <association property="productSpecs" javaType="com.facai.facai.entity.ProductSpecs">
       <id column="s_id" property="sId" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <result column="s_name" property="sName" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="s_brief" property="sBrief" javaType="java.lang.String" jdbcType="VARCHAR" />
       <result column="s_price"  property="sPrice" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
       <result column="s_state" property="sState" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <result column="s_productid" property="sProductid" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -27,7 +28,7 @@
     c_id, c_psid, c_count, c_userid, c_total
   </sql>
   <sql id="Base_Column_List_r">
-    c_id, c_psid, c_count, c_userid, c_total, s_id, s_name, s_state, s_price, s_productid,p_id, p_title,p_cover,p_state
+    c_id, c_psid, c_count, c_userid, c_total, s_id, s_name,s_brief, s_state, s_price, s_productid,p_id, p_title,p_cover,p_state
   </sql>
   <select id="selectAllCartByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT

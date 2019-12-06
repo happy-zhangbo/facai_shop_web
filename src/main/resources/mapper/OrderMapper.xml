@@ -215,10 +215,17 @@
       o_confirmtime = #{oConfirmtime,jdbcType=TIMESTAMP}
     where o_id = #{oId,jdbcType=INTEGER}
   </update>
-  <update id="cancelOrderBySerialNum" parameterType="com.facai.facai.entity.Order">
+  <update id="cancelOrderBySerialNum">
     update `order`
     set o_state = -1
-    where o_serialNum = #{oSerialnum,jdbcType=VARCHAR} and o_userid = #{oUserid,jdbcType=INTEGER}
+    where o_serialNum = #{serialNum,jdbcType=VARCHAR} and o_userid = #{userId,jdbcType=INTEGER}
+  </update>
+  
+  <update id="wxnotifyResult">
+    update `order`
+    set o_state = #{state,jdbcType=INTEGER},
+    o_transactionNum = #{transactionNum,jdbcType=INTEGER}
+    where o_serialNum = #{serialNum,jdbcType=VARCHAR}
   </update>
 
 

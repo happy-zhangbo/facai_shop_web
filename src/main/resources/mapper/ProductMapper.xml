@@ -43,6 +43,7 @@
     from product
     LEFT JOIN `productSpecs` ON `p_id` = `s_productid`
     where p_id = #{pId,jdbcType=INTEGER} AND `p_state` = 1  AND `s_state` = 1
+    ORDER BY s_price ASC
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from product

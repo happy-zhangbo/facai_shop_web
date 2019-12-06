@@ -24,7 +24,7 @@ public class RedisUtil {
     }
 
     public void setUserInfo(UserInfo userInfo){
-        redisTemplate.opsForValue().set(userInfo.getuId().toString(),JsonUtil.beanToJson(userInfo));
+        redisTemplate.opsForValue().set(userInfo.getuId().toString(),JsonUtil.beanToJson(userInfo),3600, TimeUnit.SECONDS);
     }
 
     public void setOrder(String key, Map<String,String> map){
@@ -35,5 +35,9 @@ public class RedisUtil {
         String str = redisTemplate.opsForValue().get("order:"+serialnum+"-"+uid).toString();
         Map<String,String> map = (Map<String,String>)JSON.parse(str);
         return map;
+    }
+
+    public void removeOrder(String serialnum,Integer uid){
+        redisTemplate.delete("order:"+serialnum+"-"+uid);
     }
 }

@@ -25,20 +25,19 @@ public class WXPayIntegrated {
     public static Map<String,String> dounifiedorder(Order order, String openid){
         try {
             Map<String,String> map = new HashMap<String,String>();
-            map.put("appid", Constant.appid);
+            map.put("appid", WXPayConstants.APPID);
             map.put("mch_id","1566079381");
             map.put("nonce_str",WXPayUtil.generateNonceStr());
             map.put("device_info","01");
-            map.put("body", "zhangbo");
-
-
+            map.put("body", "材料购买-在线支付".getBytes("UTF-8").toString());
             map.put("out_trade_no",order.getoSerialnum());
             map.put("total_fee",order.getoTotalamount().multiply(new BigDecimal(100)).intValue()+"");
             map.put("spbill_create_ip","47.94.143.161");
-            map.put("notify_url","47.94.143.161");
+            map.put("notify_url","http://nzdx2t.natappfree.cc/order/notify_orderConfirm");
             map.put("trade_type","JSAPI");
             map.put("openid",openid);
-            map.put("sign",WXPayUtil.generateSignature(map,Constant.payKey));
+            map.put("attach",order.getoUserid().toString());
+            map.put("sign",WXPayUtil.generateSignature(map,WXPayConstants.API_KEY));
             String res = OkHttp.doPostString("https://api.mch.weixin.qq.com/pay/unifiedorder",WXPayUtil.mapToXml(map));
 
 
@@ -71,6 +70,8 @@ public class WXPayIntegrated {
     public static void main(String[] args) throws Exception {
         Order order = new Order();
         order.setoSerialnum("20191203143112345");
+        order.setoTotalamount(new BigDecimal(0.01));
+        order.setoUserid(5);
         System.out.println(JSON.toJSONString(dounifiedorder(order,"oK1Yd0SnDm0flgHDtz3fj4qWFMIw")));
     }
 }

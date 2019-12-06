@@ -31,4 +31,8 @@ public interface OrderService {
     //取消订单
     public int cancelOrderBySerialNum(String serialNum,Integer userId);
 
+    //处理支付订单
+    public int wxnotifyResult(boolean result,String serialNum,String transactionNum);
+
+
 }

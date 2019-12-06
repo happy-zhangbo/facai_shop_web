@@ -15,8 +15,16 @@ public class WXPayConstants {
     public static final String DOMAIN_APIUS = "apius.mch.weixin.qq.com";
 
 
+    public final static String APPID = "wxf50b7a91ca5f7a0e"; //微信appid
+
+    public final static String APP_SECRET = "ce50953120839f6aa1f573f98bbc7980"; //微信登录密钥
+
+    public final static String API_KEY = "q0VATCWMo1Vb4kxK3z1zJUvFX8vi7Xlp";
+
     public static final String FAIL     = "FAIL";
     public static final String SUCCESS  = "SUCCESS";
+    public static final String RESULT_CODE = "return_code";
+    public static final String ERR_CODE_DES = "return_msg";
     public static final String HMACSHA256 = "HMAC-SHA256";
     public static final String MD5 = "MD5";
 

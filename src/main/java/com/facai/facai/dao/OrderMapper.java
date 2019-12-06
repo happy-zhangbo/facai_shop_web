@@ -1,6 +1,7 @@
 package com.facai.facai.dao;
 
 import com.facai.facai.entity.Order;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,4 +26,5 @@ public interface OrderMapper {
 
     int cancelOrderBySerialNum(String serialNum,Integer userId);
 
+    int wxnotifyResult(@Param("state") Integer state,@Param("serialNum") String serialNum,@Param("transactionNum") String transactionNum);
 }

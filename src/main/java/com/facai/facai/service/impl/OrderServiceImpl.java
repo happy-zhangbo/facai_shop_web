@@ -128,4 +128,15 @@ public class OrderServiceImpl implements OrderService {
     public int cancelOrderBySerialNum(String serialNum,Integer userId) {
         return orderMapper.cancelOrderBySerialNum(serialNum,userId);
     }
+
+    @Override
+    public int wxnotifyResult(boolean result, String serialNum,String transactionNum) {
+        if(result){
+            return orderMapper.wxnotifyResult(1,serialNum,transactionNum);
+        }else{
+            //支付失败
+            return orderMapper.wxnotifyResult(-2,serialNum,transactionNum);
+        }
+
+    }
 }
