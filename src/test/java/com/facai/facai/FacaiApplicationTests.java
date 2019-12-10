@@ -33,28 +33,7 @@ class FacaiApplicationTests {
 
     @Test
     void contextLoads() {
-        List<OrderDetail> list = new ArrayList<OrderDetail>();
-        OrderDetail o1 = new OrderDetail();
-        o1.setOdPsid(1);
-        list.add(o1);
-        OrderDetail o2 = new OrderDetail();
-        o2.setOdPsid(2);
-        list.add(o2);
-        OrderDetail o3 = new OrderDetail();
-        o3.setOdPsid(3);
-        list.add(o3);
-        List<ProductSpecs> psList = productSpecsMapper.selectOrderProductSpecs(list);
-        BigDecimal res = new BigDecimal(0);
-        int i = 0;
-        for (ProductSpecs productSpecs:psList) {
-            res = res.add(productSpecs.getsPrice());
-            OrderDetail od = list.get(i);
-            od.setOdTotal(res);
-            list.set(i,od);
-            i++;
-        }
-
-        System.out.println(res.intValue()+"");
+        System.out.println(JsonUtil.beanToJson(orderMapper.selectOrderByOidAndUserId(47,5)));
 
     }
 

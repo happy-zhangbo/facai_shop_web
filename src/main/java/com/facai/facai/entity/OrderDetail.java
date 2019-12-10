@@ -15,6 +15,8 @@ public class OrderDetail {
 
     private Integer  ocId;
 
+    private ProductSpecs productSpecs;
+
     public OrderDetail(Integer odId, Integer odOid, Integer odPsid, Integer odCount, BigDecimal odTotal) {
         this.odId = odId;
         this.odOid = odOid;
@@ -67,6 +69,14 @@ public class OrderDetail {
         this.odTotal = odTotal;
     }
 
+    public ProductSpecs getProductSpecs() {
+        return productSpecs;
+    }
+
+    public void setProductSpecs(ProductSpecs productSpecs) {
+        this.productSpecs = productSpecs;
+    }
+
     public Integer getOcId() {
         return ocId;
     }
@@ -74,4 +84,6 @@ public class OrderDetail {
     public void setOcId(Integer ocId) {
         this.ocId = ocId;
     }
+
+
 }

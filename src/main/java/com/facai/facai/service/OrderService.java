@@ -23,7 +23,7 @@ public interface OrderService {
     public int payOrder();
 
     //查询订单
-    public List<Order> selectAllOrderByUserId(Integer userId);
+    public List<Order> selectAllOrderByUserId(Integer userId,Integer oState);
 
     //查询订单详情
     public Order selectOrderByOidAndUserId(Integer oId,Integer userId);

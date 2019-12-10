@@ -33,7 +33,7 @@ public class WXPayIntegrated {
             map.put("out_trade_no",order.getoSerialnum());
             map.put("total_fee",order.getoTotalamount().multiply(new BigDecimal(100)).intValue()+"");
             map.put("spbill_create_ip","47.94.143.161");
-            map.put("notify_url","http://nzdx2t.natappfree.cc/order/notify_orderConfirm");
+            map.put("notify_url","http://3jqf5a.natappfree.cc/order/notify_orderConfirm");
             map.put("trade_type","JSAPI");
             map.put("openid",openid);
             map.put("attach",order.getoUserid().toString());

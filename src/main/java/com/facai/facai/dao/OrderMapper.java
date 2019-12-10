@@ -20,7 +20,7 @@ public interface OrderMapper {
 
     int updateByPrimaryKey(Order record);
 
-    List<Order> selectAllOrderByUserId(Integer userId);
+    List<Order> selectAllOrderByUserId(Integer userId,Integer oState);
 
     Order selectOrderByOidAndUserId(Integer oId,Integer userId);
 

@@ -34,9 +34,13 @@ public class Order {
 
     private Date oConfirmtime;
 
+    private String oLink;
+
+    private String oLinktel;
+
     private List<OrderDetail> orderDetail;
 
-    public Order(Integer oId, String oSerialnum, Integer oPaymethod, Date oCreatetime, Integer oState, Integer oType, String oTransactionnum, BigDecimal oTotalamount, Integer oUserid, String oRemarks, String oAddress, Date oDeliverytime, Date oConfirmtime) {
+    public Order(Integer oId, String oSerialnum, Integer oPaymethod, Date oCreatetime, Integer oState, Integer oType, String oTransactionnum, BigDecimal oTotalamount, Integer oUserid, String oRemarks, String oAddress, Date oDeliverytime, Date oConfirmtime, String oLink, String oLinktel) {
         this.oId = oId;
         this.oSerialnum = oSerialnum;
         this.oPaymethod = oPaymethod;
@@ -50,6 +54,8 @@ public class Order {
         this.oAddress = oAddress;
         this.oDeliverytime = oDeliverytime;
         this.oConfirmtime = oConfirmtime;
+        this.oLink = oLink;
+        this.oLinktel = oLinktel;
     }
 
     public Order() {
@@ -158,6 +164,22 @@ public class Order {
 
     public void setoConfirmtime(Date oConfirmtime) {
         this.oConfirmtime = oConfirmtime;
+    }
+
+    public String getoLink() {
+        return oLink;
+    }
+
+    public void setoLink(String oLink) {
+        this.oLink = oLink;
+    }
+
+    public String getoLinktel() {
+        return oLinktel;
+    }
+
+    public void setoLinktel(String oLinktel) {
+        this.oLinktel = oLinktel;
     }
 
     public List<OrderDetail> getOrderDetail() {

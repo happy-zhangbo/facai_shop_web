@@ -98,12 +98,17 @@ public class OrderServiceImpl implements OrderService {
         List<ProductSpecs> psList = productSpecsMapper.selectOrderProductSpecs(list);
         BigDecimal res = new BigDecimal(0);
         int i = 0;
-        for (ProductSpecs productSpecs:psList) {
-            res = res.add(productSpecs.getsPrice());
-            OrderDetail od = list.get(i);
-            od.setOdTotal(res);
-            list.set(i,od);
+        for (OrderDetail orderDetail:list) {
+            for (ProductSpecs productSpecs:psList){
+                if(orderDetail.getOdPsid() == productSpecs.getsId()){
+                    BigDecimal total = productSpecs.getsPrice().multiply(new BigDecimal(orderDetail.getOdCount()));
+                    orderDetail.setOdTotal(total);
+                    res = res.add(total);
+                }
+            }
+            list.set(i,orderDetail);
             i++;
+
         }
         return res;
     }
@@ -115,8 +120,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> selectAllOrderByUserId(Integer userId) {
-        return orderMapper.selectAllOrderByUserId(userId);
+    public List<Order> selectAllOrderByUserId(Integer userId,Integer oState) {
+        return orderMapper.selectAllOrderByUserId(userId,oState);
     }
 
     @Override

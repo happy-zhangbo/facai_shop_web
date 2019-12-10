@@ -58,9 +58,9 @@ public class OrderController {
 
     //查询订单
     @RequestMapping(value = "select_orders")
-    public Resp selectAllOrder(@RequestHeader String token){
+    public Resp selectAllOrder(@RequestHeader String token,Integer oState){
         UserInfo userInfo = redisUtil.getUserInfo(token);
-        List<Order> list = orderService.selectAllOrderByUserId(userInfo.getuId());
+        List<Order> list = orderService.selectAllOrderByUserId(userInfo.getuId(),oState);
         if(null != list && 0 != list.size()){
             return Resp.success("查询完成",list);
         }else{

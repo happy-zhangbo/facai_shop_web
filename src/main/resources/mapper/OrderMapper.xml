@@ -16,6 +16,8 @@
       <arg column="o_address" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="o_deliverytime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="o_confirmtime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="o_link" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="o_linktel" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
     <collection property="orderDetail" ofType="com.facai.facai.entity.OrderDetail">
       <result property="odId" column="od_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -23,15 +25,31 @@
       <result property="odPsid" column="od_psid" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <result property="odCount" column="od_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <result property="odTotal" column="od_total" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <association property="productSpecs" javaType="com.facai.facai.entity.ProductSpecs">
+        <id column="s_id" property="sId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="s_name" property="sName" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="s_state" property="sState" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="s_brief" property="sBrief" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="s_productid" property="sProductid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <association property="product" javaType="com.facai.facai.entity.Product">
+          <id column="p_id" property="pId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+          <result column="p_title" property="pTitle" javaType="java.lang.String" jdbcType="VARCHAR" />
+          <result column="p_state" property="pState" javaType="java.lang.Integer" jdbcType="INTEGER" />
+          <result column="p_cover" property="pCover" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </association>
+      </association>
     </collection>
   </resultMap>
   <sql id="Base_Column_List">
     o_id, o_serialNum, o_payMethod, o_createtime, o_state, o_type, o_transactionNum, 
-    o_totalAmount, o_userid, o_remarks, o_address, o_deliverytime, o_confirmtime
+    o_totalAmount, o_userid, o_remarks, o_address, o_deliverytime, o_confirmtime,`o_link`,`o_linkTel`
   </sql>
   <sql id="Base_Column_List_Collection">
     o_id, o_serialNum, o_payMethod, o_createtime, o_state, o_type, o_transactionNum,
-    o_totalAmount, o_userid, o_remarks, o_address, o_deliverytime, o_confirmtime, od_id, od_oid, od_psid, od_count, od_total
+    o_totalAmount, o_userid, o_remarks, o_address, o_deliverytime, o_confirmtime,`o_link`,`o_linkTel`,
+    od_id, od_oid, od_psid, od_count, od_total,
+    s_id, s_name, s_productid,s_state,s_brief,
+    p_id, p_title, p_cover, p_state
   </sql>
   <!-- 根据用户查询所有订单 -->
   <select id="selectAllOrderByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -39,6 +57,9 @@
     <include refid="Base_Column_List" />
     from `order`
     where o_userid = #{userId,jdbcType=INTEGER}
+    <if test="oState != null">
+      and o_state = #{oState,jdbcType=INTEGER}
+    </if>
   </select>
   <!-- 查询订单详情 -->
   <select id="selectOrderByOidAndUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -46,6 +67,8 @@
     <include refid="Base_Column_List_Collection" />
     from `order`
     left join orderDetail on o_id = od_oid
+    left join productSpecs on od_psid = s_id
+    left join product on  s_productid = p_id
     where o_id = #{oId,jdbcType=INTEGER} and  o_userid = #{userId,jdbcType=INTEGER}
   </select>
 
@@ -65,12 +88,12 @@
       o_createtime, o_state, o_type, 
       o_transactionNum, o_totalAmount, o_userid, 
       o_remarks, o_address, o_deliverytime, 
-      o_confirmtime)
+      o_confirmtime,`o_link`,`o_linkTel`)
     values (#{oId,jdbcType=INTEGER}, #{oSerialnum,jdbcType=VARCHAR}, #{oPaymethod,jdbcType=INTEGER}, 
       #{oCreatetime,jdbcType=TIMESTAMP}, #{oState,jdbcType=INTEGER}, #{oType,jdbcType=INTEGER}, 
       #{oTransactionnum,jdbcType=VARCHAR}, #{oTotalamount,jdbcType=DECIMAL}, #{oUserid,jdbcType=INTEGER}, 
       #{oRemarks,jdbcType=VARCHAR}, #{oAddress,jdbcType=VARCHAR}, #{oDeliverytime,jdbcType=TIMESTAMP}, 
-      #{oConfirmtime,jdbcType=TIMESTAMP})
+      #{oConfirmtime,jdbcType=TIMESTAMP},#{oLink,jdbcType=VARCHAR},#{oLinktel,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.facai.facai.entity.Order">
     insert into `order`
@@ -114,6 +137,12 @@
       <if test="oConfirmtime != null">
         o_confirmtime,
       </if>
+      <if test="oLink != null">
+        o_link,
+      </if>
+      <if test="oLinktel != null">
+        o_linkTel,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="oId != null">
@@ -154,6 +183,12 @@
       </if>
       <if test="oConfirmtime != null">
         #{oConfirmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oLink != null">
+        #{oLink,jdbcType=VARCHAR},
+      </if>
+      <if test="oLinktel != null">
+        #{oLinktel,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -196,6 +231,12 @@
       <if test="oConfirmtime != null">
         o_confirmtime = #{oConfirmtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="oLink != null">
+        o_link = #{oLink,jdbcType=VARCHAR},
+      </if>
+      <if test="oLinktel != null">
+        o_linkTel = #{oLinktel,jdbcType=VARCHAR}
+      </if>
     </set>
     where o_id = #{oId,jdbcType=INTEGER}
   </update>
@@ -212,7 +253,9 @@
       o_remarks = #{oRemarks,jdbcType=VARCHAR},
       o_address = #{oAddress,jdbcType=VARCHAR},
       o_deliverytime = #{oDeliverytime,jdbcType=TIMESTAMP},
-      o_confirmtime = #{oConfirmtime,jdbcType=TIMESTAMP}
+      o_confirmtime = #{oConfirmtime,jdbcType=TIMESTAMP},
+      o_link = #{oLink,jdbcType=VARCHAR},
+      o_linkTel = #{oLinktel,jdbcType=VARCHAR}
     where o_id = #{oId,jdbcType=INTEGER}
   </update>
   <update id="cancelOrderBySerialNum">
