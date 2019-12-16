@@ -26,5 +26,7 @@ public interface OrderMapper {
 
     int cancelOrderBySerialNum(String serialNum,Integer userId);
 
+    int confirmOrderBySerialNum(String serialNum,Integer userId);
+
     int wxnotifyResult(@Param("state") Integer state,@Param("serialNum") String serialNum,@Param("transactionNum") String transactionNum);
 }

@@ -8,7 +8,6 @@ import com.facai.facai.util.Resp;
 import com.facai.facai.weixin.WXPayConstants;
 import com.facai.facai.weixin.WXPayUtil;
 import com.facai.facai.weixin.WeXinUtil;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,9 +102,20 @@ public class OrderController {
         }else{
             return Resp.error("订单已取消，或不存在");
         }
-
-
     }
+
+    //确认收货
+    @RequestMapping(value = "update_confirmOrder")
+    public Resp confirmOrder(@RequestHeader String token,String serialNum){
+        UserInfo userInfo = redisUtil.getUserInfo(token);
+        int num = orderService.confirmOrder(serialNum,userInfo.getuId());
+        if(num > 0){
+            return Resp.success("订单已完成");
+        }else{
+            return Resp.error("订单取消失败");
+        }
+    }
+
     /**
      * 返回成功xml
      */

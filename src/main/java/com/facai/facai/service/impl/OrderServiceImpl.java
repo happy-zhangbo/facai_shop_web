@@ -44,6 +44,9 @@ public class OrderServiceImpl implements OrderService {
     private ProductSpecsMapper productSpecsMapper;
 
     @Autowired
+    private WeXinUtil weXinUtil;
+
+    @Autowired
     private RedisUtil redisUtil;
 
 
@@ -73,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
                 //订单提交数据库成功后，根据支付方式调用统一下单接口
 
                 if(order.getoType() == 1){ //微信支付
-                    map = WeXinUtil.wxPayUnifiedorder(order,userInfo.getuOpenid());
+                    map = weXinUtil.wxPayUnifiedorder(order,userInfo.getuOpenid());
                     if(null == map){
                         TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                     }
@@ -133,6 +136,12 @@ public class OrderServiceImpl implements OrderService {
     public int cancelOrderBySerialNum(String serialNum,Integer userId) {
         return orderMapper.cancelOrderBySerialNum(serialNum,userId);
     }
+
+    @Override
+    public int confirmOrder(String serialNum, Integer userId) {
+        return orderMapper.confirmOrderBySerialNum(serialNum,userId);
+    }
+
 
     @Override
     public int wxnotifyResult(boolean result, String serialNum,String transactionNum) {

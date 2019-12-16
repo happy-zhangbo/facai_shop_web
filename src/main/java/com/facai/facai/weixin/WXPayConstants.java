@@ -1,5 +1,8 @@
 package com.facai.facai.weixin;
 
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Value;
+
 /**
  * 常量
  */
@@ -20,6 +23,7 @@ public class WXPayConstants {
     public final static String APP_SECRET = "ce50953120839f6aa1f573f98bbc7980"; //微信登录密钥
 
     public final static String API_KEY = "q0VATCWMo1Vb4kxK3z1zJUvFX8vi7Xlp";
+
 
     public static final String FAIL     = "FAIL";
     public static final String SUCCESS  = "SUCCESS";

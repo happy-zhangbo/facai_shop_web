@@ -60,6 +60,7 @@
     <if test="oState != null">
       and o_state = #{oState,jdbcType=INTEGER}
     </if>
+    order by o_id desc
   </select>
   <!-- 查询订单详情 -->
   <select id="selectOrderByOidAndUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -263,7 +264,13 @@
     set o_state = -1
     where o_serialNum = #{serialNum,jdbcType=VARCHAR} and o_userid = #{userId,jdbcType=INTEGER}
   </update>
-  
+
+  <update id="confirmOrderBySerialNum">
+    update `order`
+    set o_state = 3
+    where o_serialNum = #{serialNum,jdbcType=VARCHAR} and o_userid = #{userId,jdbcType=INTEGER}
+  </update>
+
   <update id="wxnotifyResult">
     update `order`
     set o_state = #{state,jdbcType=INTEGER},

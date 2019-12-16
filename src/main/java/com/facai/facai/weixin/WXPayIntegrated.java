@@ -8,6 +8,9 @@ import com.facai.facai.entity.UserInfo;
 import com.facai.facai.util.JsonUtil;
 import com.facai.facai.util.OkHttp;
 import okhttp3.Response;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.net.URLEncoder;
@@ -15,15 +18,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+@Component
 public class WXPayIntegrated {
 
+
+    @Value("${weixin.callback.url}")
+    private String notify_url;
 
     /**
      * 统一下单
      * @param order
      */
-    public static Map<String,String> dounifiedorder(Order order, String openid){
+    public Map<String,String> dounifiedorder(Order order, String openid){
         try {
+            System.out.println(notify_url);
             Map<String,String> map = new HashMap<String,String>();
             map.put("appid", WXPayConstants.APPID);
             map.put("mch_id","1566079381");
@@ -33,7 +41,7 @@ public class WXPayIntegrated {
             map.put("out_trade_no",order.getoSerialnum());
             map.put("total_fee",order.getoTotalamount().multiply(new BigDecimal(100)).intValue()+"");
             map.put("spbill_create_ip","47.94.143.161");
-            map.put("notify_url","http://3jqf5a.natappfree.cc/order/notify_orderConfirm");
+            map.put("notify_url", notify_url);
             map.put("trade_type","JSAPI");
             map.put("openid",openid);
             map.put("attach",order.getoUserid().toString());
@@ -72,6 +80,6 @@ public class WXPayIntegrated {
         order.setoSerialnum("20191203143112345");
         order.setoTotalamount(new BigDecimal(0.01));
         order.setoUserid(5);
-        System.out.println(JSON.toJSONString(dounifiedorder(order,"oK1Yd0SnDm0flgHDtz3fj4qWFMIw")));
+        //System.out.println(JSON.toJSONString(dounifiedorder(order,"oK1Yd0SnDm0flgHDtz3fj4qWFMIw")));
     }
 }

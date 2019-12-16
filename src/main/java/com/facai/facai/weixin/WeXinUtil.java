@@ -6,6 +6,9 @@ import com.facai.facai.util.JsonUtil;
 import com.facai.facai.util.OkHttp;
 import com.facai.facai.util.Resp;
 import okhttp3.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
@@ -16,7 +19,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+@Component
 public class WeXinUtil {
+
+
+    @Autowired
+    private WXPayIntegrated wxPayIntegrated;
+
 
     //访问登录接口
     public static WxLoginResp wxLogin(String code) {
@@ -38,8 +47,8 @@ public class WeXinUtil {
     }
 
     //访问微信支付统一下单接口
-    public static Map<String,String> wxPayUnifiedorder(Order order,String openid){
-        Map<String,String> map = WXPayIntegrated.dounifiedorder(order,openid);
+    public Map<String,String> wxPayUnifiedorder(Order order,String openid){
+        Map<String,String> map = wxPayIntegrated.dounifiedorder(order,openid);
         Map<String,String> resMap = new HashMap<String,String>();
         if(null == map){
             return null;
