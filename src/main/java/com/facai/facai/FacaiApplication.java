@@ -11,8 +11,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FacaiApplication {
 
     public static void main(String[] args) {
-
         SpringApplication.run(FacaiApplication.class, args);
     }
-
 }
