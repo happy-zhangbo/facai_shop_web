@@ -49,7 +49,6 @@ public class UriFilter implements Filter {
             logger.info("URL:" + uri + " - is not need filter");
             //api接口放行
             filterChain.doFilter(request, response);
-            return;
         }else{
             logger.info("URL:" + uri + " - is need filter");
             logger.info("token header == "+token);
@@ -61,7 +60,6 @@ public class UriFilter implements Filter {
             }
 
             filterChain.doFilter(request, response);
-            return;
         }
     }
 

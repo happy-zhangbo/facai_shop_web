@@ -19,7 +19,6 @@ public class RedisUtil {
     public UserInfo getUserInfo(String token){
         String uid = JwtUtil.getCurUserId(token);
         String u = redisTemplate.opsForValue().get(uid).toString();
-
         return JsonUtil.jsonToBean(u,UserInfo.class);
     }
 
