@@ -13,7 +13,10 @@ public interface ProductService {
     public List<ProductType> selectAllProductType();
 
     //根据分类ID查询产品
-    public List<Product> selectAllProduct(Integer typeId);
+    public List<Product> selectAllProductByTypeId(Integer typeId);
+
+    //查询产品
+    public List<Product> selectAllProduct(Product product);
 
     //根据产品ID查询详情
     public Product selectByProductId(Integer pid);

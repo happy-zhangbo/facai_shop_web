@@ -20,5 +20,8 @@ public interface ProductMapper {
     int updateByPrimaryKey(Product record);
 
     //根据分类ID查询所有产品
-    List<Product> selectAllProduct(Integer typeId);
+    List<Product> selectAllProductByTypeId(Integer typeId);
+
+    //查询所有产品
+    List<Product> selectAllProduct(Product product);
 }

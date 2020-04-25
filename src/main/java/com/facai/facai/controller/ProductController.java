@@ -33,15 +33,25 @@ public class ProductController {
     //根据分类ID查询所有产品
     @RequestMapping(value = "find_selectAllProductByTypeId")
     public Resp selectAllProductByTypeId(Integer typeid){
-
-        List<Product> list = productService.selectAllProduct(typeid);
+        List<Product> list = productService.selectAllProductByTypeId(typeid);
         if(null != list && 0 != list.size()){
             return Resp.success("查询完成",list);
         }else{
             return Resp.error("暂无产品数据");
         }
-
     }
+
+    //查询所有产品
+    @RequestMapping(value = "find_selectAllProduct")
+    public Resp selectAllProduct(Product product){
+        List<Product> list = productService.selectAllProduct(product);
+        if(null != list && 0 != list.size()){
+            return Resp.success("查询完成",list);
+        }else{
+            return Resp.error("暂无产品数据");
+        }
+    }
+
 
     //根据产品ID查询产品详细信息
     @RequestMapping(value = "find_selectProductDetail")

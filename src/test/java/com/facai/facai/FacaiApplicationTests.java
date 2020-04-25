@@ -2,6 +2,7 @@ package com.facai.facai;
 
 import com.facai.facai.dao.*;
 import com.facai.facai.entity.OrderDetail;
+import com.facai.facai.entity.Product;
 import com.facai.facai.entity.ProductSpecs;
 import com.facai.facai.entity.UserInfo;
 import com.facai.facai.util.JsonUtil;
@@ -28,13 +29,17 @@ class FacaiApplicationTests {
     private CartMapper cartMapper;
     @Autowired
     private ProductSpecsMapper productSpecsMapper;
+    @Autowired
+    private ProductMapper productMapper;
 
     @Autowired
     RedisTemplate redisTemplate;
 
     @Test
     void contextLoads() {
-        System.out.println(JsonUtil.beanToJson(orderMapper.selectOrderByOidAndUserId(47,5)));
+        Product p = new Product();
+        p.setpTitle("大");
+        System.out.println(JsonUtil.beanToJson(productMapper.selectAllProduct(p)));
 
     }
 

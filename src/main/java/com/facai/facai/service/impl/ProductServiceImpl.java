@@ -25,8 +25,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> selectAllProduct(Integer typeId) {
-        return productMapper.selectAllProduct(typeId);
+    public List<Product> selectAllProductByTypeId(Integer typeId) {
+        return productMapper.selectAllProductByTypeId(typeId);
+    }
+
+    @Override
+    public List<Product> selectAllProduct(Product product) {
+        return productMapper.selectAllProduct(product);
     }
 
     @Override
